@@ -1,3 +1,7 @@
+State 56 conflicts: 1 shift/reduce
+State 61 conflicts: 3 reduce/reduce
+
+
 Grammar
 
     0 $accept: Tiny $end
@@ -25,53 +29,60 @@ Grammar
 
    14 Statement: Name ASSIGNMENT Expression
    15          | OUTPUT '(' Expression ')'
-   16          | IF Expression THEN Statement ELSE Statement
-   17          | WHILE Expression DO Statement
-   18          | Body
-   19          | %empty
+   16          | OUTPUT '(' Statement_1
+   17          | IF Expression THEN Statement Statement_1_1
+   18          | WHILE Expression DO Statement
+   19          | Body
+   20          | %empty
 
-   20 Expression: Term
-   21           | Term LTE Term
+   21 Statement_1_1: %empty
+   22              | ELSE Statement
 
-   22 Term: Primary
-   23     | Primary '+' Term
+   23 Statement_1: Expression ')'
+   24            | Expression ',' Statement_1
 
-   24 Primary: '-' Primary
-   25        | READ
-   26        | Name
-   27        | INTEGER_NUM
-   28        | '(' Expression ')'
+   25 Expression: Term
+   26           | Term LTE Term
 
-   29 Name: IDENTIFIER
+   27 Term: Primary
+   28     | Primary '+' Term
+
+   29 Primary: '-' Primary
+   30        | READ
+   31        | Name
+   32        | INTEGER_NUM
+   33        | '(' Expression ')'
+
+   34 Name: IDENTIFIER
 
 
 Terminals, with rules where they appear
 
 $end (0) 0
-'(' (40) 15 28
-')' (41) 15 28
-'+' (43) 23
-',' (44) 8
-'-' (45) 24
+'(' (40) 15 16 33
+')' (41) 15 23 33
+'+' (43) 28
+',' (44) 8 24
+'-' (45) 29
 '.' (46) 1
 ':' (58) 1 7
 ';' (59) 5 13
 error (256)
 END (258) 12
 VAR (259) 2
-IDENTIFIER (260) 29
-IF (261) 16
-READ (262) 25
-ELSE (263) 16
-THEN (264) 16
-WHILE (265) 17
-OUTPUT (266) 15
-DO (267) 17
+IDENTIFIER (260) 34
+IF (261) 17
+READ (262) 30
+ELSE (263) 22
+THEN (264) 17
+WHILE (265) 18
+OUTPUT (266) 15 16
+DO (267) 18
 BEGINX (268) 11
 BOOLEAN (269) 10
-INTEGER_NUM (270) 27
+INTEGER_NUM (270) 32
 INTEGER (271) 9
-LTE (272) 21
+LTE (272) 26
 ASSIGNMENT (273) 14
 PROGRAM (274) 1
 
@@ -93,19 +104,23 @@ Dcln_1 (33)
 Type (34)
     on left: 9 10, on right: 7
 Body (35)
-    on left: 11, on right: 1 18
+    on left: 11, on right: 1 19
 Body_1 (36)
     on left: 12 13, on right: 11 13
 Statement (37)
-    on left: 14 15 16 17 18 19, on right: 12 13 16 17
-Expression (38)
-    on left: 20 21, on right: 14 15 16 17 28
-Term (39)
-    on left: 22 23, on right: 20 21 23
-Primary (40)
-    on left: 24 25 26 27 28, on right: 22 23 24
-Name (41)
-    on left: 29, on right: 1 7 8 14 26
+    on left: 14 15 16 17 18 19 20, on right: 12 13 17 18 22
+Statement_1_1 (38)
+    on left: 21 22, on right: 17
+Statement_1 (39)
+    on left: 23 24, on right: 16 24
+Expression (40)
+    on left: 25 26, on right: 14 15 17 18 23 24 33
+Term (41)
+    on left: 27 28, on right: 25 26 28
+Primary (42)
+    on left: 29 30 31 32 33, on right: 27 28 29
+Name (43)
+    on left: 34, on right: 1 7 8 14 31
 
 
 State 0
@@ -135,9 +150,9 @@ State 2
 
 State 3
 
-   29 Name: IDENTIFIER .
+   34 Name: IDENTIFIER .
 
-    $default  reduce using rule 29 (Name)
+    $default  reduce using rule 34 (Name)
 
 
 State 4
@@ -228,7 +243,7 @@ State 13
     OUTPUT      shift, and go to state 20
     BEGINX      shift, and go to state 13
 
-    $default  reduce using rule 19 (Statement)
+    $default  reduce using rule 20 (Statement)
 
     Body       go to state 21
     Body_1     go to state 22
@@ -281,7 +296,7 @@ State 17
 
 State 18
 
-   16 Statement: IF . Expression THEN Statement ELSE Statement
+   17 Statement: IF . Expression THEN Statement Statement_1_1
 
     IDENTIFIER   shift, and go to state 3
     READ         shift, and go to state 31
@@ -297,7 +312,7 @@ State 18
 
 State 19
 
-   17 Statement: WHILE . Expression DO Statement
+   18 Statement: WHILE . Expression DO Statement
 
     IDENTIFIER   shift, and go to state 3
     READ         shift, and go to state 31
@@ -314,15 +329,16 @@ State 19
 State 20
 
    15 Statement: OUTPUT . '(' Expression ')'
+   16          | OUTPUT . '(' Statement_1
 
     '('  shift, and go to state 40
 
 
 State 21
 
-   18 Statement: Body .
+   19 Statement: Body .
 
-    $default  reduce using rule 18 (Statement)
+    $default  reduce using rule 19 (Statement)
 
 
 State 22
@@ -392,21 +408,21 @@ State 30
 
 State 31
 
-   25 Primary: READ .
+   30 Primary: READ .
 
-    $default  reduce using rule 25 (Primary)
+    $default  reduce using rule 30 (Primary)
 
 
 State 32
 
-   27 Primary: INTEGER_NUM .
+   32 Primary: INTEGER_NUM .
 
-    $default  reduce using rule 27 (Primary)
+    $default  reduce using rule 32 (Primary)
 
 
 State 33
 
-   28 Primary: '(' . Expression ')'
+   33 Primary: '(' . Expression ')'
 
     IDENTIFIER   shift, and go to state 3
     READ         shift, and go to state 31
@@ -422,7 +438,7 @@ State 33
 
 State 34
 
-   24 Primary: '-' . Primary
+   29 Primary: '-' . Primary
 
     IDENTIFIER   shift, and go to state 3
     READ         shift, and go to state 31
@@ -436,41 +452,41 @@ State 34
 
 State 35
 
-   16 Statement: IF Expression . THEN Statement ELSE Statement
+   17 Statement: IF Expression . THEN Statement Statement_1_1
 
     THEN  shift, and go to state 47
 
 
 State 36
 
-   20 Expression: Term .
-   21           | Term . LTE Term
+   25 Expression: Term .
+   26           | Term . LTE Term
 
     LTE  shift, and go to state 48
 
-    $default  reduce using rule 20 (Expression)
+    $default  reduce using rule 25 (Expression)
 
 
 State 37
 
-   22 Term: Primary .
-   23     | Primary . '+' Term
+   27 Term: Primary .
+   28     | Primary . '+' Term
 
     '+'  shift, and go to state 49
 
-    $default  reduce using rule 22 (Term)
+    $default  reduce using rule 27 (Term)
 
 
 State 38
 
-   26 Primary: Name .
+   31 Primary: Name .
 
-    $default  reduce using rule 26 (Primary)
+    $default  reduce using rule 31 (Primary)
 
 
 State 39
 
-   17 Statement: WHILE Expression . DO Statement
+   18 Statement: WHILE Expression . DO Statement
 
     DO  shift, and go to state 50
 
@@ -478,6 +494,7 @@ State 39
 State 40
 
    15 Statement: OUTPUT '(' . Expression ')'
+   16          | OUTPUT '(' . Statement_1
 
     IDENTIFIER   shift, and go to state 3
     READ         shift, and go to state 31
@@ -485,10 +502,11 @@ State 40
     '('          shift, and go to state 33
     '-'          shift, and go to state 34
 
-    Expression  go to state 51
-    Term        go to state 36
-    Primary     go to state 37
-    Name        go to state 38
+    Statement_1  go to state 51
+    Expression   go to state 52
+    Term         go to state 36
+    Primary      go to state 37
+    Name         go to state 38
 
 
 State 41
@@ -508,10 +526,10 @@ State 42
     OUTPUT      shift, and go to state 20
     BEGINX      shift, and go to state 13
 
-    $default  reduce using rule 19 (Statement)
+    $default  reduce using rule 20 (Statement)
 
     Body       go to state 21
-    Body_1     go to state 52
+    Body_1     go to state 53
     Statement  go to state 23
     Name       go to state 24
 
@@ -526,7 +544,7 @@ State 43
     '('          shift, and go to state 33
     '-'          shift, and go to state 34
 
-    Expression  go to state 53
+    Expression  go to state 54
     Term        go to state 36
     Primary     go to state 37
     Name        go to state 38
@@ -541,21 +559,21 @@ State 44
 
 State 45
 
-   28 Primary: '(' Expression . ')'
+   33 Primary: '(' Expression . ')'
 
-    ')'  shift, and go to state 54
+    ')'  shift, and go to state 55
 
 
 State 46
 
-   24 Primary: '-' Primary .
+   29 Primary: '-' Primary .
 
-    $default  reduce using rule 24 (Primary)
+    $default  reduce using rule 29 (Primary)
 
 
 State 47
 
-   16 Statement: IF Expression THEN . Statement ELSE Statement
+   17 Statement: IF Expression THEN . Statement Statement_1_1
 
     IDENTIFIER  shift, and go to state 3
     IF          shift, and go to state 18
@@ -563,31 +581,16 @@ State 47
     OUTPUT      shift, and go to state 20
     BEGINX      shift, and go to state 13
 
-    $default  reduce using rule 19 (Statement)
+    $default  reduce using rule 20 (Statement)
 
     Body       go to state 21
-    Statement  go to state 55
+    Statement  go to state 56
     Name       go to state 24
 
 
 State 48
 
-   21 Expression: Term LTE . Term
-
-    IDENTIFIER   shift, and go to state 3
-    READ         shift, and go to state 31
-    INTEGER_NUM  shift, and go to state 32
-    '('          shift, and go to state 33
-    '-'          shift, and go to state 34
-
-    Term     go to state 56
-    Primary  go to state 37
-    Name     go to state 38
-
-
-State 49
-
-   23 Term: Primary '+' . Term
+   26 Expression: Term LTE . Term
 
     IDENTIFIER   shift, and go to state 3
     READ         shift, and go to state 31
@@ -600,9 +603,24 @@ State 49
     Name     go to state 38
 
 
+State 49
+
+   28 Term: Primary '+' . Term
+
+    IDENTIFIER   shift, and go to state 3
+    READ         shift, and go to state 31
+    INTEGER_NUM  shift, and go to state 32
+    '('          shift, and go to state 33
+    '-'          shift, and go to state 34
+
+    Term     go to state 58
+    Primary  go to state 37
+    Name     go to state 38
+
+
 State 50
 
-   17 Statement: WHILE Expression DO . Statement
+   18 Statement: WHILE Expression DO . Statement
 
     IDENTIFIER  shift, and go to state 3
     IF          shift, and go to state 18
@@ -610,79 +628,118 @@ State 50
     OUTPUT      shift, and go to state 20
     BEGINX      shift, and go to state 13
 
-    $default  reduce using rule 19 (Statement)
+    $default  reduce using rule 20 (Statement)
 
     Body       go to state 21
-    Statement  go to state 58
+    Statement  go to state 59
     Name       go to state 24
 
 
 State 51
 
-   15 Statement: OUTPUT '(' Expression . ')'
+   16 Statement: OUTPUT '(' Statement_1 .
 
-    ')'  shift, and go to state 59
+    $default  reduce using rule 16 (Statement)
 
 
 State 52
+
+   15 Statement: OUTPUT '(' Expression . ')'
+   23 Statement_1: Expression . ')'
+   24            | Expression . ',' Statement_1
+
+    ','  shift, and go to state 60
+    ')'  shift, and go to state 61
+
+
+State 53
 
    13 Body_1: Statement ';' Body_1 .
 
     $default  reduce using rule 13 (Body_1)
 
 
-State 53
+State 54
 
    14 Statement: Name ASSIGNMENT Expression .
 
     $default  reduce using rule 14 (Statement)
 
 
-State 54
-
-   28 Primary: '(' Expression ')' .
-
-    $default  reduce using rule 28 (Primary)
-
-
 State 55
 
-   16 Statement: IF Expression THEN Statement . ELSE Statement
+   33 Primary: '(' Expression ')' .
 
-    ELSE  shift, and go to state 60
+    $default  reduce using rule 33 (Primary)
 
 
 State 56
 
-   21 Expression: Term LTE Term .
+   17 Statement: IF Expression THEN Statement . Statement_1_1
 
-    $default  reduce using rule 21 (Expression)
+    ELSE  shift, and go to state 62
+
+    ELSE      [reduce using rule 21 (Statement_1_1)]
+    $default  reduce using rule 21 (Statement_1_1)
+
+    Statement_1_1  go to state 63
 
 
 State 57
 
-   23 Term: Primary '+' Term .
+   26 Expression: Term LTE Term .
 
-    $default  reduce using rule 23 (Term)
+    $default  reduce using rule 26 (Expression)
 
 
 State 58
 
-   17 Statement: WHILE Expression DO Statement .
+   28 Term: Primary '+' Term .
 
-    $default  reduce using rule 17 (Statement)
+    $default  reduce using rule 28 (Term)
 
 
 State 59
 
-   15 Statement: OUTPUT '(' Expression ')' .
+   18 Statement: WHILE Expression DO Statement .
 
-    $default  reduce using rule 15 (Statement)
+    $default  reduce using rule 18 (Statement)
 
 
 State 60
 
-   16 Statement: IF Expression THEN Statement ELSE . Statement
+   24 Statement_1: Expression ',' . Statement_1
+
+    IDENTIFIER   shift, and go to state 3
+    READ         shift, and go to state 31
+    INTEGER_NUM  shift, and go to state 32
+    '('          shift, and go to state 33
+    '-'          shift, and go to state 34
+
+    Statement_1  go to state 64
+    Expression   go to state 65
+    Term         go to state 36
+    Primary      go to state 37
+    Name         go to state 38
+
+
+State 61
+
+   15 Statement: OUTPUT '(' Expression ')' .
+   23 Statement_1: Expression ')' .
+
+    END       reduce using rule 15 (Statement)
+    END       [reduce using rule 23 (Statement_1)]
+    ELSE      reduce using rule 15 (Statement)
+    ELSE      [reduce using rule 23 (Statement_1)]
+    ';'       reduce using rule 15 (Statement)
+    ';'       [reduce using rule 23 (Statement_1)]
+    $default  reduce using rule 15 (Statement)
+
+
+State 62
+
+   22 Statement_1_1: ELSE . Statement
 
     IDENTIFIER  shift, and go to state 3
     IF          shift, and go to state 18
@@ -690,15 +747,45 @@ State 60
     OUTPUT      shift, and go to state 20
     BEGINX      shift, and go to state 13
 
-    $default  reduce using rule 19 (Statement)
+    $default  reduce using rule 20 (Statement)
 
     Body       go to state 21
-    Statement  go to state 61
+    Statement  go to state 66
     Name       go to state 24
 
 
-State 61
+State 63
 
-   16 Statement: IF Expression THEN Statement ELSE Statement .
+   17 Statement: IF Expression THEN Statement Statement_1_1 .
 
-    $default  reduce using rule 16 (Statement)
+    $default  reduce using rule 17 (Statement)
+
+
+State 64
+
+   24 Statement_1: Expression ',' Statement_1 .
+
+    $default  reduce using rule 24 (Statement_1)
+
+
+State 65
+
+   23 Statement_1: Expression . ')'
+   24            | Expression . ',' Statement_1
+
+    ','  shift, and go to state 60
+    ')'  shift, and go to state 67
+
+
+State 66
+
+   22 Statement_1_1: ELSE Statement .
+
+    $default  reduce using rule 22 (Statement_1_1)
+
+
+State 67
+
+   23 Statement_1: Expression ')' .
+
+    $default  reduce using rule 23 (Statement_1)

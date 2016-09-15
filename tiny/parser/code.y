@@ -34,7 +34,9 @@ typedef struct {
 %token <info>  LTE
 %token <info>  ASSIGNMENT
 %token <info>  PROGRAM
+%type <dlist> Statement_1_1
 %type <dlist> Tiny
+%type <dlist> Statement_1
 %type <dlist> Body_1
 %type <dlist> Dcln
 %type <dlist> Statement
@@ -459,7 +461,43 @@ Statement : Name     ASSIGNMENT Expression
 		$$ = r;
 
              }
-         | IF       Expression THEN     Statement ELSE     Statement 
+         | OUTPUT   '('      Statement_1 
+             {
+		DLIST r;
+		T_NODE *t;
+
+		InitDList(&r);
+
+		if ($1.makenode) {
+		    T_NODE *t2;
+		    t2 = (T_NODE *)malloc(sizeof(T_NODE));
+		    assert(t2);
+		    t2->nodeptr = AllocTreeNode(TREETAG_STRING,$1.string,
+		                                TREETAG_LINE,$1.line,
+		                                TREETAG_COLUMN,$1.column,
+		                                TREETAG_DONE);
+		    DAddTail(&r,&t2->mynode);
+		}
+
+		while (DCount(&$3) > 0)
+		    DAddTail(&r,DRemHead(&$3));
+
+		t = (T_NODE *)malloc(sizeof(T_NODE));
+		assert(t);
+		t->nodeptr = AllocTreeNode(TREETAG_STRING,"output",
+		                                TREETAG_LINE,$1.line,
+		                                TREETAG_COLUMN,$1.column,
+		                           TREETAG_DONE);
+		while (DCount(&r) > 0) {
+		    T_NODE *t3 = DRemHead(&r);
+		    AddChild(t->nodeptr,t3->nodeptr);
+		    free(t3);
+		}
+		DAddTail(&r,&t->mynode);
+		$$ = r;
+
+             }
+         | IF       Expression THEN     Statement Statement_1_1 
              {
 		DLIST r;
 		T_NODE *t;
@@ -494,19 +532,8 @@ Statement : Name     ASSIGNMENT Expression
 		while (DCount(&$4) > 0)
 		    DAddTail(&r,DRemHead(&$4));
 
-		if ($5.makenode) {
-		    T_NODE *t2;
-		    t2 = (T_NODE *)malloc(sizeof(T_NODE));
-		    assert(t2);
-		    t2->nodeptr = AllocTreeNode(TREETAG_STRING,$5.string,
-		                                TREETAG_LINE,$5.line,
-		                                TREETAG_COLUMN,$5.column,
-		                                TREETAG_DONE);
-		    DAddTail(&r,&t2->mynode);
-		}
-
-		while (DCount(&$6) > 0)
-		    DAddTail(&r,DRemHead(&$6));
+		while (DCount(&$5) > 0)
+		    DAddTail(&r,DRemHead(&$5));
 
 		t = (T_NODE *)malloc(sizeof(T_NODE));
 		assert(t);
@@ -602,6 +629,69 @@ Statement : Name     ASSIGNMENT Expression
 		    free(t3);
 		}
 		DAddTail(&r,&t->mynode);
+		$$ = r;
+
+             }
+         ;
+
+Statement_1_1 : 
+             {
+		DLIST r;
+
+		InitDList(&r);
+
+		$$ = r;
+
+             }
+         | ELSE     Statement 
+             {
+		DLIST r;
+
+		InitDList(&r);
+
+		if ($1.makenode) {
+		    T_NODE *t2;
+		    t2 = (T_NODE *)malloc(sizeof(T_NODE));
+		    assert(t2);
+		    t2->nodeptr = AllocTreeNode(TREETAG_STRING,$1.string,
+		                                TREETAG_LINE,$1.line,
+		                                TREETAG_COLUMN,$1.column,
+		                                TREETAG_DONE);
+		    DAddTail(&r,&t2->mynode);
+		}
+
+		while (DCount(&$2) > 0)
+		    DAddTail(&r,DRemHead(&$2));
+
+		$$ = r;
+
+             }
+         ;
+
+Statement_1 : Expression ')'      
+             {
+		DLIST r;
+
+		InitDList(&r);
+
+		while (DCount(&$1) > 0)
+		    DAddTail(&r,DRemHead(&$1));
+
+		$$ = r;
+
+             }
+         | Expression ','      Statement_1 
+             {
+		DLIST r;
+
+		InitDList(&r);
+
+		while (DCount(&$1) > 0)
+		    DAddTail(&r,DRemHead(&$1));
+
+		while (DCount(&$3) > 0)
+		    DAddTail(&r,DRemHead(&$3));
+
 		$$ = r;
 
              }
