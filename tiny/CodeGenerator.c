@@ -99,8 +99,13 @@
 #define    NOTNode       72
 #define    ORNode         73
 #define    ANDNode        74
+#define    MULTNode       75
+#define    DIVINode       76 
+#define    MODNode        77    
+#define    EXPNode        78      
 
-#define    NumberOfNodes  74/* '<identifier>'*/
+
+#define    NumberOfNodes  78/* '<identifier>'*/
 typedef int Mode;
 
 FILE *CodeFile;
@@ -123,7 +128,7 @@ char *mach_op[] =
 char *node_name[] =
     {"program","types","type","dclns","dcln","integer",
      "boolean","block","assign","output","if","while",
-     "<null>","<=","+","-","read","<integer>","<identifier>", ">=", "<", ">", "=", "<>", "not", "or", "and"};
+     "<null>","<=","+","-","read","<integer>","<identifier>", ">=", "<", ">", "=", "<>", "not", "or", "and", "*", "/", "mod", "**"};
 
 
 void CodeGenerate(int argc, char *argv[])
@@ -261,6 +266,34 @@ void Expression (TreeNode T, Clabel CurrLabel)
 
    switch (NodeName(T))
    {
+      case EXPNode:
+         Expression ( Child(T,1) , CurrLabel);
+         Expression ( Child(T,2) , NoLabel);
+         CodeGen1 (BOPOP, BEXP, NoLabel);
+         DecrementFrameSize();
+         break;
+
+      case MULTNode:
+         Expression ( Child(T,1) , CurrLabel);
+         Expression ( Child(T,2) , NoLabel);
+         CodeGen1 (BOPOP, BMULT, NoLabel);
+         DecrementFrameSize();
+         break;
+
+      case DIVINode:
+         Expression ( Child(T,1) , CurrLabel);
+         Expression ( Child(T,2) , NoLabel);
+         CodeGen1 (BOPOP, BDIV, NoLabel);
+         DecrementFrameSize();
+         break;
+
+      case MODNode:
+         Expression ( Child(T,1) , CurrLabel);
+         Expression ( Child(T,2) , NoLabel);
+         CodeGen1 (BOPOP, BMOD, NoLabel);
+         DecrementFrameSize();
+         break;
+
       case ORNode:
          Expression ( Child(T,1) , CurrLabel);
          Expression ( Child(T,2) , NoLabel);

@@ -53,23 +53,25 @@ extern int yydebug;
     READ = 263,
     ELSE = 264,
     THEN = 265,
-    GT = 266,
-    EQ = 267,
-    WHILE = 268,
-    OUTPUT = 269,
-    GTE = 270,
-    NOT = 271,
-    DO = 272,
-    BEGINX = 273,
-    BOOLEAN = 274,
-    INTEGER_NUM = 275,
-    AND = 276,
-    INTEGER = 277,
-    LTE = 278,
-    OR = 279,
-    LT = 280,
-    ASSIGNMENT = 281,
-    PROGRAM = 282
+    MOD = 266,
+    GT = 267,
+    EQ = 268,
+    WHILE = 269,
+    OUTPUT = 270,
+    GTE = 271,
+    NOT = 272,
+    DO = 273,
+    BEGINX = 274,
+    BOOLEAN = 275,
+    INTEGER_NUM = 276,
+    AND = 277,
+    INTEGER = 278,
+    EXP = 279,
+    LTE = 280,
+    OR = 281,
+    LT = 282,
+    ASSIGNMENT = 283,
+    PROGRAM = 284
   };
 #endif
 /* Tokens.  */
@@ -81,23 +83,25 @@ extern int yydebug;
 #define READ 263
 #define ELSE 264
 #define THEN 265
-#define GT 266
-#define EQ 267
-#define WHILE 268
-#define OUTPUT 269
-#define GTE 270
-#define NOT 271
-#define DO 272
-#define BEGINX 273
-#define BOOLEAN 274
-#define INTEGER_NUM 275
-#define AND 276
-#define INTEGER 277
-#define LTE 278
-#define OR 279
-#define LT 280
-#define ASSIGNMENT 281
-#define PROGRAM 282
+#define MOD 266
+#define GT 267
+#define EQ 268
+#define WHILE 269
+#define OUTPUT 270
+#define GTE 271
+#define NOT 272
+#define DO 273
+#define BEGINX 274
+#define BOOLEAN 275
+#define INTEGER_NUM 276
+#define AND 277
+#define INTEGER 278
+#define EXP 279
+#define LTE 280
+#define OR 281
+#define LT 282
+#define ASSIGNMENT 283
+#define PROGRAM 284
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -109,7 +113,7 @@ union YYSTYPE
    TOKEN_INFO info;
    DLIST dlist;
 
-#line 113 "y.tab.h" /* yacc.c:1909  */
+#line 117 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

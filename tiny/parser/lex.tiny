@@ -47,7 +47,10 @@ STR     \"[^\"]+\"
 "not"       { return rule(NOT); }
 "and"       { return rule(AND); }
 "or"        { return rule(OR); }
+"mod"       { return rule(MOD); }
+"**"        { return rule(EXP); }
 {INT}		{ return node(INTEGER_NUM); }
+
 {IDENT}		{ return node(IDENTIFIER); }
 "{"		{ column += yyleng; BEGIN( COMM1 ); }
 <COMM1>[^}\n]+  { column += yyleng; }
@@ -62,6 +65,9 @@ STR     \"[^\"]+\"
 ")"             { return rule(yytext[0]); }
 "+"             { return rule(yytext[0]); }
 "-"             { return rule(yytext[0]); }
+"*"             { return rule(yytext[0]); }
+"/"             { return rule(yytext[0]); }
+
 .               { yyerror("unrecognized char");
                   printf("-->%s<--\n",yytext);
                   column++; }  

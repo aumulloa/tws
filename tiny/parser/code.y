@@ -25,6 +25,7 @@ typedef struct {
 %token <info>  READ
 %token <info>  ELSE
 %token <info>  THEN
+%token <info>  MOD
 %token <info>  GT
 %token <info>  EQ
 %token <info>  WHILE
@@ -37,12 +38,16 @@ typedef struct {
 %token <info>  INTEGER_NUM
 %token <info>  AND
 %token <info>  INTEGER
+%token <info>  EXP
 %token <info>  LTE
 %token <info>  OR
 %token <info>  LT
 %token <info>  ASSIGNMENT
 %token <info>  PROGRAM
 %type <dlist> Statement_1_1
+%type <dlist> SuperPrimary
+%type <dlist> MorePrimary
+%type <dlist> Factor
 %type <dlist> Tiny
 %type <dlist> Statement_1
 %type <dlist> Body_1
@@ -953,7 +958,7 @@ Expression : Term
              }
          ;
 
-Term     : Primary  
+Term     : Factor   
              {
 		DLIST r;
 
@@ -965,7 +970,7 @@ Term     : Primary
 		$$ = r;
 
              }
-         | Primary  '+'      Term     
+         | Term     '+'      Factor   
              {
 		DLIST r;
 		T_NODE *t;
@@ -991,7 +996,7 @@ Term     : Primary
 		$$ = r;
 
              }
-         | Primary  '-'      Term     
+         | Term     '-'      Factor   
              {
 		DLIST r;
 		T_NODE *t;
@@ -1017,7 +1022,7 @@ Term     : Primary
 		$$ = r;
 
              }
-         | Primary  OR       Term     
+         | Term     OR       Factor   
              {
 		DLIST r;
 		T_NODE *t;
@@ -1056,7 +1061,73 @@ Term     : Primary
 		$$ = r;
 
              }
-         | Primary  AND      Term     
+         ;
+
+Factor   : Primary  
+             {
+		DLIST r;
+
+		InitDList(&r);
+
+		while (DCount(&$1) > 0)
+		    DAddTail(&r,DRemHead(&$1));
+
+		$$ = r;
+
+             }
+         | Factor   '*'      Primary  
+             {
+		DLIST r;
+		T_NODE *t;
+
+		InitDList(&r);
+
+		while (DCount(&$1) > 0)
+		    DAddTail(&r,DRemHead(&$1));
+
+		while (DCount(&$3) > 0)
+		    DAddTail(&r,DRemHead(&$3));
+
+		t = (T_NODE *)malloc(sizeof(T_NODE));
+		assert(t);
+		t->nodeptr = AllocTreeNode(TREETAG_STRING,"*",
+		                           TREETAG_DONE);
+		while (DCount(&r) > 0) {
+		    T_NODE *t3 = DRemHead(&r);
+		    AddChild(t->nodeptr,t3->nodeptr);
+		    free(t3);
+		}
+		DAddTail(&r,&t->mynode);
+		$$ = r;
+
+             }
+         | Factor   '/'      Primary  
+             {
+		DLIST r;
+		T_NODE *t;
+
+		InitDList(&r);
+
+		while (DCount(&$1) > 0)
+		    DAddTail(&r,DRemHead(&$1));
+
+		while (DCount(&$3) > 0)
+		    DAddTail(&r,DRemHead(&$3));
+
+		t = (T_NODE *)malloc(sizeof(T_NODE));
+		assert(t);
+		t->nodeptr = AllocTreeNode(TREETAG_STRING,"/",
+		                           TREETAG_DONE);
+		while (DCount(&r) > 0) {
+		    T_NODE *t3 = DRemHead(&r);
+		    AddChild(t->nodeptr,t3->nodeptr);
+		    free(t3);
+		}
+		DAddTail(&r,&t->mynode);
+		$$ = r;
+
+             }
+         | Factor   AND      Primary  
              {
 		DLIST r;
 		T_NODE *t;
@@ -1083,6 +1154,45 @@ Term     : Primary
 		t = (T_NODE *)malloc(sizeof(T_NODE));
 		assert(t);
 		t->nodeptr = AllocTreeNode(TREETAG_STRING,"and",
+		                                TREETAG_LINE,$2.line,
+		                                TREETAG_COLUMN,$2.column,
+		                           TREETAG_DONE);
+		while (DCount(&r) > 0) {
+		    T_NODE *t3 = DRemHead(&r);
+		    AddChild(t->nodeptr,t3->nodeptr);
+		    free(t3);
+		}
+		DAddTail(&r,&t->mynode);
+		$$ = r;
+
+             }
+         | Factor   MOD      Primary  
+             {
+		DLIST r;
+		T_NODE *t;
+
+		InitDList(&r);
+
+		while (DCount(&$1) > 0)
+		    DAddTail(&r,DRemHead(&$1));
+
+		if ($2.makenode) {
+		    T_NODE *t2;
+		    t2 = (T_NODE *)malloc(sizeof(T_NODE));
+		    assert(t2);
+		    t2->nodeptr = AllocTreeNode(TREETAG_STRING,$2.string,
+		                                TREETAG_LINE,$2.line,
+		                                TREETAG_COLUMN,$2.column,
+		                                TREETAG_DONE);
+		    DAddTail(&r,&t2->mynode);
+		}
+
+		while (DCount(&$3) > 0)
+		    DAddTail(&r,DRemHead(&$3));
+
+		t = (T_NODE *)malloc(sizeof(T_NODE));
+		assert(t);
+		t->nodeptr = AllocTreeNode(TREETAG_STRING,"mod",
 		                                TREETAG_LINE,$2.line,
 		                                TREETAG_COLUMN,$2.column,
 		                           TREETAG_DONE);
@@ -1179,7 +1289,74 @@ Primary  : '-'      Primary
 		$$ = r;
 
              }
-         | READ     
+         | MorePrimary 
+             {
+		DLIST r;
+
+		InitDList(&r);
+
+		while (DCount(&$1) > 0)
+		    DAddTail(&r,DRemHead(&$1));
+
+		$$ = r;
+
+             }
+         ;
+
+MorePrimary : SuperPrimary EXP      MorePrimary 
+             {
+		DLIST r;
+		T_NODE *t;
+
+		InitDList(&r);
+
+		while (DCount(&$1) > 0)
+		    DAddTail(&r,DRemHead(&$1));
+
+		if ($2.makenode) {
+		    T_NODE *t2;
+		    t2 = (T_NODE *)malloc(sizeof(T_NODE));
+		    assert(t2);
+		    t2->nodeptr = AllocTreeNode(TREETAG_STRING,$2.string,
+		                                TREETAG_LINE,$2.line,
+		                                TREETAG_COLUMN,$2.column,
+		                                TREETAG_DONE);
+		    DAddTail(&r,&t2->mynode);
+		}
+
+		while (DCount(&$3) > 0)
+		    DAddTail(&r,DRemHead(&$3));
+
+		t = (T_NODE *)malloc(sizeof(T_NODE));
+		assert(t);
+		t->nodeptr = AllocTreeNode(TREETAG_STRING,"**",
+		                                TREETAG_LINE,$2.line,
+		                                TREETAG_COLUMN,$2.column,
+		                           TREETAG_DONE);
+		while (DCount(&r) > 0) {
+		    T_NODE *t3 = DRemHead(&r);
+		    AddChild(t->nodeptr,t3->nodeptr);
+		    free(t3);
+		}
+		DAddTail(&r,&t->mynode);
+		$$ = r;
+
+             }
+         | SuperPrimary 
+             {
+		DLIST r;
+
+		InitDList(&r);
+
+		while (DCount(&$1) > 0)
+		    DAddTail(&r,DRemHead(&$1));
+
+		$$ = r;
+
+             }
+         ;
+
+SuperPrimary : READ     
              {
 		DLIST r;
 		T_NODE *t;

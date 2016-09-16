@@ -41,10 +41,12 @@
 #define NOTNode        25
 #define ORNode         26
 #define ANDNode        27
+#define MULTNode       28
+#define DIVINode       29 
+#define MODNode        30          
+#define EXPNode        31
 
-
-
-#define NumberOfNodes  27
+#define NumberOfNodes  31
 
 
 typedef TreeNode UserType;
@@ -58,7 +60,7 @@ char *node[] = { "program", "types", "type", "dclns",
                  "dcln", "integer", "boolean", "block",
                  "assign", "output", "if", "while", 
                  "<null>", "<=", "+", "-", "read",
-                 "<integer>", "<identifier>", ">=", "<", ">", "=", "<>","not","or", "and"
+                 "<integer>", "<identifier>", ">=", "<", ">", "=", "<>","not","or", "and", "*", "/", "mod", "**"
                 };
 
 
@@ -172,6 +174,22 @@ UserType Expression (TreeNode T)
      
    switch (NodeName(T))
    {
+      case EXPNode:
+      case MULTNode:
+      case DIVINode:
+      case MODNode:
+         Type1 = Expression (Child(T,1));
+         Type2 = Expression (Child(T,2));
+
+         if (Type1 != Type2)
+         {
+            ErrorHeader(Child(T,1));
+            printf ("ARGUMENTS OF '*, **, /, mod' MUST BE TYPE INTEGER\n");
+            printf ("\n");
+         }
+         return (TypeInteger);
+
+
       case ORNode :
       case ANDNode :
          Type1 = Expression (Child(T,1));
