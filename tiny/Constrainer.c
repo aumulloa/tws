@@ -38,10 +38,13 @@
 #define GTNode         22
 #define EQNode         23
 #define NEQNode        24
+#define NOTNode        25
+#define ORNode         26
+#define ANDNode        27
 
 
 
-#define NumberOfNodes  24
+#define NumberOfNodes  27
 
 
 typedef TreeNode UserType;
@@ -55,7 +58,7 @@ char *node[] = { "program", "types", "type", "dclns",
                  "dcln", "integer", "boolean", "block",
                  "assign", "output", "if", "while", 
                  "<null>", "<=", "+", "-", "read",
-                 "<integer>", "<identifier>", ">=", "<", ">", "=", "<>"
+                 "<integer>", "<identifier>", ">=", "<", ">", "=", "<>","not","or", "and"
                 };
 
 
@@ -169,6 +172,29 @@ UserType Expression (TreeNode T)
      
    switch (NodeName(T))
    {
+      case ORNode :
+      case ANDNode :
+         Type1 = Expression (Child(T,1));
+         Type2 = Expression (Child(T,2));
+
+         if (Type1 != Type2)
+         {
+            ErrorHeader(Child(T,1));
+            printf ("ARGUMENTS OF 'AND, OR' MUST BE TYPE BOOLEAN\n");
+            printf ("\n");
+         }
+         return (TypeBoolean);
+
+      case NOTNode :
+         Type1 = Expression (Child(T,1));
+         if(Type1 != TypeBoolean)
+         {
+            ErrorHeader(Child(T,1));
+            printf ("ARGUMENTS OF 'not' MUST BE TYPE BOOLEAN\n");
+            printf ("\n");
+         }
+         return (TypeBoolean);
+
       case EQNode :    
          Type1 = Expression (Child(T,1));
          Type2 = Expression (Child(T,2));

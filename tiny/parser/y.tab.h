@@ -58,15 +58,18 @@ extern int yydebug;
     WHILE = 268,
     OUTPUT = 269,
     GTE = 270,
-    DO = 271,
-    BEGINX = 272,
-    BOOLEAN = 273,
-    INTEGER_NUM = 274,
-    INTEGER = 275,
-    LTE = 276,
-    LT = 277,
-    ASSIGNMENT = 278,
-    PROGRAM = 279
+    NOT = 271,
+    DO = 272,
+    BEGINX = 273,
+    BOOLEAN = 274,
+    INTEGER_NUM = 275,
+    AND = 276,
+    INTEGER = 277,
+    LTE = 278,
+    OR = 279,
+    LT = 280,
+    ASSIGNMENT = 281,
+    PROGRAM = 282
   };
 #endif
 /* Tokens.  */
@@ -83,15 +86,18 @@ extern int yydebug;
 #define WHILE 268
 #define OUTPUT 269
 #define GTE 270
-#define DO 271
-#define BEGINX 272
-#define BOOLEAN 273
-#define INTEGER_NUM 274
-#define INTEGER 275
-#define LTE 276
-#define LT 277
-#define ASSIGNMENT 278
-#define PROGRAM 279
+#define NOT 271
+#define DO 272
+#define BEGINX 273
+#define BOOLEAN 274
+#define INTEGER_NUM 275
+#define AND 276
+#define INTEGER 277
+#define LTE 278
+#define OR 279
+#define LT 280
+#define ASSIGNMENT 281
+#define PROGRAM 282
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -103,7 +109,7 @@ union YYSTYPE
    TOKEN_INFO info;
    DLIST dlist;
 
-#line 107 "y.tab.h" /* yacc.c:1909  */
+#line 113 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

@@ -25,9 +25,14 @@ Expression -> Term
 
 Term       -> Primary 
 	         -> Primary '+' Term				                    => "+"
-           -> Primary '-' Term                            => "-";
+           -> Primary '-' Term                            => "-"
+           -> Primary OR Term                             => "or"
+           -> Primary AND Term                            => "and";
 
 Primary    -> '-' Primary                            	    => "-"
+           -> '+' Primary                                 => "+"
+           -> NOT Primary                                 => "not"
+
 	         -> READ                                 	      => "read"
            -> Name
            -> INTEGER_NUM				                          => "<integer>"

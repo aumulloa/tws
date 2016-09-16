@@ -7,11 +7,13 @@
        SGV    1             
        LIT    7             
        SGV    2             
-       LGV    0             
-       LGV    2             
-       BOP    BMINUS        
-       LIT    2             
+       LIT    1             
+       LIT    1             
        BOP    BEQ           
+       LIT    2             
+       LIT    1             
+       BOP    BEQ           
+       BOP    BAND          
        COND   L1     L2     
 L1     LIT    5             
        SOS    OUTPUT        
