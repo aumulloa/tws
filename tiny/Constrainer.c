@@ -46,7 +46,10 @@
 #define MODNode        30          
 #define EXPNode        31
 
-#define NumberOfNodes  31
+#define BOOLNodeTrue   32
+#define BOOLNodeFalse   33
+
+#define NumberOfNodes  33
 
 
 typedef TreeNode UserType;
@@ -60,7 +63,7 @@ char *node[] = { "program", "types", "type", "dclns",
                  "dcln", "integer", "boolean", "block",
                  "assign", "output", "if", "while", 
                  "<null>", "<=", "+", "-", "read",
-                 "<integer>", "<identifier>", ">=", "<", ">", "=", "<>","not","or", "and", "*", "/", "mod", "**"
+                 "<integer>", "<identifier>", ">=", "<", ">", "=", "<>","not","or", "and", "*", "/", "mod", "**", "<boolean>", "<booleanf>"
                 };
 
 
@@ -312,6 +315,11 @@ UserType Expression (TreeNode T)
       case IntegerNode : 
          return (TypeInteger);
 
+      case  BOOLNodeTrue :
+         return(TypeBoolean);
+
+      case  BOOLNodeFalse :
+         return(TypeBoolean);
 
       case IdentifierNode :
          Declaration = Lookup (NodeName(Child(T,1)), T);

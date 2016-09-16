@@ -20,6 +20,8 @@ INT	[0-9]+
 WHITE   [ \t\v\f]*
 LIT     '[^\']+'
 STR     \"[^\"]+\"
+
+
 %%
 
 {WHITE}    	{ column += yyleng; }
@@ -50,6 +52,10 @@ STR     \"[^\"]+\"
 "mod"       { return rule(MOD); }
 "**"        { return rule(EXP); }
 {INT}		{ return node(INTEGER_NUM); }
+
+"true" { return node(BOOLEAN_TRUE); }
+"false" { return node(BOOLEAN_FALSE); }
+
 
 {IDENT}		{ return node(IDENTIFIER); }
 "{"		{ column += yyleng; BEGIN( COMM1 ); }

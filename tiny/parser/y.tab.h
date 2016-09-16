@@ -49,29 +49,31 @@ extern int yydebug;
     END = 259,
     VAR = 260,
     IDENTIFIER = 261,
-    IF = 262,
-    READ = 263,
-    ELSE = 264,
-    THEN = 265,
-    MOD = 266,
-    GT = 267,
-    EQ = 268,
-    WHILE = 269,
-    OUTPUT = 270,
-    GTE = 271,
-    NOT = 272,
-    DO = 273,
-    BEGINX = 274,
-    BOOLEAN = 275,
-    INTEGER_NUM = 276,
-    AND = 277,
-    INTEGER = 278,
-    EXP = 279,
-    LTE = 280,
-    OR = 281,
-    LT = 282,
-    ASSIGNMENT = 283,
-    PROGRAM = 284
+    BOOLEAN_FALSE = 262,
+    IF = 263,
+    READ = 264,
+    ELSE = 265,
+    BOOLEAN_TRUE = 266,
+    THEN = 267,
+    MOD = 268,
+    GT = 269,
+    EQ = 270,
+    WHILE = 271,
+    OUTPUT = 272,
+    GTE = 273,
+    NOT = 274,
+    DO = 275,
+    BEGINX = 276,
+    BOOLEAN = 277,
+    INTEGER_NUM = 278,
+    AND = 279,
+    INTEGER = 280,
+    EXP = 281,
+    LTE = 282,
+    OR = 283,
+    LT = 284,
+    ASSIGNMENT = 285,
+    PROGRAM = 286
   };
 #endif
 /* Tokens.  */
@@ -79,29 +81,31 @@ extern int yydebug;
 #define END 259
 #define VAR 260
 #define IDENTIFIER 261
-#define IF 262
-#define READ 263
-#define ELSE 264
-#define THEN 265
-#define MOD 266
-#define GT 267
-#define EQ 268
-#define WHILE 269
-#define OUTPUT 270
-#define GTE 271
-#define NOT 272
-#define DO 273
-#define BEGINX 274
-#define BOOLEAN 275
-#define INTEGER_NUM 276
-#define AND 277
-#define INTEGER 278
-#define EXP 279
-#define LTE 280
-#define OR 281
-#define LT 282
-#define ASSIGNMENT 283
-#define PROGRAM 284
+#define BOOLEAN_FALSE 262
+#define IF 263
+#define READ 264
+#define ELSE 265
+#define BOOLEAN_TRUE 266
+#define THEN 267
+#define MOD 268
+#define GT 269
+#define EQ 270
+#define WHILE 271
+#define OUTPUT 272
+#define GTE 273
+#define NOT 274
+#define DO 275
+#define BEGINX 276
+#define BOOLEAN 277
+#define INTEGER_NUM 278
+#define AND 279
+#define INTEGER 280
+#define EXP 281
+#define LTE 282
+#define OR 283
+#define LT 284
+#define ASSIGNMENT 285
+#define PROGRAM 286
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -113,7 +117,7 @@ union YYSTYPE
    TOKEN_INFO info;
    DLIST dlist;
 
-#line 117 "y.tab.h" /* yacc.c:1909  */
+#line 121 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

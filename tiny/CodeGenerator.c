@@ -104,8 +104,10 @@
 #define    MODNode        77    
 #define    EXPNode        78      
 
+#define    BOOLNodeTrue       79
+#define    BOOLNodeFalse       80
 
-#define    NumberOfNodes  78/* '<identifier>'*/
+#define    NumberOfNodes  80/* '<identifier>'*/
 typedef int Mode;
 
 FILE *CodeFile;
@@ -128,8 +130,7 @@ char *mach_op[] =
 char *node_name[] =
     {"program","types","type","dclns","dcln","integer",
      "boolean","block","assign","output","if","while",
-     "<null>","<=","+","-","read","<integer>","<identifier>", ">=", "<", ">", "=", "<>", "not", "or", "and", "*", "/", "mod", "**"};
-
+     "<null>","<=","+","-","read","<integer>","<identifier>", ">=", "<", ">", "=", "<>", "not", "or", "and", "*", "/", "mod", "**", "<boolean>", "<booleanf>"};
 
 void CodeGenerate(int argc, char *argv[])
 {
@@ -375,6 +376,16 @@ void Expression (TreeNode T, Clabel CurrLabel)
 
       case IntegerNode :
          CodeGen1 (LITOP, NodeName (Child(T,1)), CurrLabel);
+         IncrementFrameSize();
+         break;
+
+      case BOOLNodeTrue :
+         CodeGen1 (LITOP, MakeStringOf(1), CurrLabel);
+         IncrementFrameSize();
+         break;
+
+      case BOOLNodeFalse :
+         CodeGen1 (LITOP, MakeStringOf(0), CurrLabel);
          IncrementFrameSize();
          break;
 

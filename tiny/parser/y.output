@@ -1,5 +1,5 @@
-State 75 conflicts: 1 shift/reduce
-State 92 conflicts: 3 reduce/reduce
+State 77 conflicts: 1 shift/reduce
+State 94 conflicts: 3 reduce/reduce
 
 
 Grammar
@@ -71,16 +71,18 @@ Grammar
    47 SuperPrimary: READ
    48             | Name
    49             | INTEGER_NUM
-   50             | '(' Expression ')'
+   50             | BOOLEAN_TRUE
+   51             | BOOLEAN_FALSE
+   52             | '(' Expression ')'
 
-   51 Name: IDENTIFIER
+   53 Name: IDENTIFIER
 
 
 Terminals, with rules where they appear
 
 $end (0) 0
-'(' (40) 15 16 50
-')' (41) 15 23 50
+'(' (40) 15 16 52
+')' (41) 15 23 52
 '*' (42) 37
 '+' (43) 33 42
 ',' (44) 8 24
@@ -93,72 +95,74 @@ error (256)
 NEQ (258) 31
 END (259) 12
 VAR (260) 2
-IDENTIFIER (261) 51
-IF (262) 17
-READ (263) 47
-ELSE (264) 22
-THEN (265) 17
-MOD (266) 40
-GT (267) 29
-EQ (268) 30
-WHILE (269) 18
-OUTPUT (270) 15 16
-GTE (271) 27
-NOT (272) 43
-DO (273) 18
-BEGINX (274) 11
-BOOLEAN (275) 10
-INTEGER_NUM (276) 49
-AND (277) 39
-INTEGER (278) 9
-EXP (279) 45
-LTE (280) 26
-OR (281) 35
-LT (282) 28
-ASSIGNMENT (283) 14
-PROGRAM (284) 1
+IDENTIFIER (261) 53
+BOOLEAN_FALSE (262) 51
+IF (263) 17
+READ (264) 47
+ELSE (265) 22
+BOOLEAN_TRUE (266) 50
+THEN (267) 17
+MOD (268) 40
+GT (269) 29
+EQ (270) 30
+WHILE (271) 18
+OUTPUT (272) 15 16
+GTE (273) 27
+NOT (274) 43
+DO (275) 18
+BEGINX (276) 11
+BOOLEAN (277) 10
+INTEGER_NUM (278) 49
+AND (279) 39
+INTEGER (280) 9
+EXP (281) 45
+LTE (282) 26
+OR (283) 35
+LT (284) 28
+ASSIGNMENT (285) 14
+PROGRAM (286) 1
 
 
 Nonterminals, with rules where they appear
 
-$accept (40)
+$accept (42)
     on left: 0
-Tiny (41)
+Tiny (43)
     on left: 1, on right: 0
-Dclns (42)
+Dclns (44)
     on left: 2 3, on right: 1
-Dclns_1 (43)
+Dclns_1 (45)
     on left: 4 5, on right: 2 5
-Dcln (44)
+Dcln (46)
     on left: 6, on right: 5
-Dcln_1 (45)
+Dcln_1 (47)
     on left: 7 8, on right: 6 8
-Type (46)
+Type (48)
     on left: 9 10, on right: 7
-Body (47)
+Body (49)
     on left: 11, on right: 1 19
-Body_1 (48)
+Body_1 (50)
     on left: 12 13, on right: 11 13
-Statement (49)
+Statement (51)
     on left: 14 15 16 17 18 19 20, on right: 12 13 17 18 22
-Statement_1_1 (50)
+Statement_1_1 (52)
     on left: 21 22, on right: 17
-Statement_1 (51)
+Statement_1 (53)
     on left: 23 24, on right: 16 24
-Expression (52)
-    on left: 25 26 27 28 29 30 31, on right: 14 15 17 18 23 24 50
-Term (53)
+Expression (54)
+    on left: 25 26 27 28 29 30 31, on right: 14 15 17 18 23 24 52
+Term (55)
     on left: 32 33 34 35, on right: 25 26 27 28 29 30 31 33 34 35
-Factor (54)
+Factor (56)
     on left: 36 37 38 39 40, on right: 32 33 34 35 37 38 39 40
-Primary (55)
+Primary (57)
     on left: 41 42 43 44, on right: 36 37 38 39 40 41 42 43
-MorePrimary (56)
+MorePrimary (58)
     on left: 45 46, on right: 44 45
-SuperPrimary (57)
-    on left: 47 48 49 50, on right: 45 46
-Name (58)
-    on left: 51, on right: 1 7 8 14 48
+SuperPrimary (59)
+    on left: 47 48 49 50 51 52, on right: 45 46
+Name (60)
+    on left: 53, on right: 1 7 8 14 48
 
 
 State 0
@@ -188,9 +192,9 @@ State 2
 
 State 3
 
-   51 Name: IDENTIFIER .
+   53 Name: IDENTIFIER .
 
-    $default  reduce using rule 51 (Name)
+    $default  reduce using rule 53 (Name)
 
 
 State 4
@@ -336,42 +340,46 @@ State 18
 
    17 Statement: IF . Expression THEN Statement Statement_1_1
 
-    IDENTIFIER   shift, and go to state 3
-    READ         shift, and go to state 31
-    NOT          shift, and go to state 32
-    INTEGER_NUM  shift, and go to state 33
-    '('          shift, and go to state 34
-    '+'          shift, and go to state 35
-    '-'          shift, and go to state 36
+    IDENTIFIER     shift, and go to state 3
+    BOOLEAN_FALSE  shift, and go to state 31
+    READ           shift, and go to state 32
+    BOOLEAN_TRUE   shift, and go to state 33
+    NOT            shift, and go to state 34
+    INTEGER_NUM    shift, and go to state 35
+    '('            shift, and go to state 36
+    '+'            shift, and go to state 37
+    '-'            shift, and go to state 38
 
-    Expression    go to state 37
-    Term          go to state 38
-    Factor        go to state 39
-    Primary       go to state 40
-    MorePrimary   go to state 41
-    SuperPrimary  go to state 42
-    Name          go to state 43
+    Expression    go to state 39
+    Term          go to state 40
+    Factor        go to state 41
+    Primary       go to state 42
+    MorePrimary   go to state 43
+    SuperPrimary  go to state 44
+    Name          go to state 45
 
 
 State 19
 
    18 Statement: WHILE . Expression DO Statement
 
-    IDENTIFIER   shift, and go to state 3
-    READ         shift, and go to state 31
-    NOT          shift, and go to state 32
-    INTEGER_NUM  shift, and go to state 33
-    '('          shift, and go to state 34
-    '+'          shift, and go to state 35
-    '-'          shift, and go to state 36
+    IDENTIFIER     shift, and go to state 3
+    BOOLEAN_FALSE  shift, and go to state 31
+    READ           shift, and go to state 32
+    BOOLEAN_TRUE   shift, and go to state 33
+    NOT            shift, and go to state 34
+    INTEGER_NUM    shift, and go to state 35
+    '('            shift, and go to state 36
+    '+'            shift, and go to state 37
+    '-'            shift, and go to state 38
 
-    Expression    go to state 44
-    Term          go to state 38
-    Factor        go to state 39
-    Primary       go to state 40
-    MorePrimary   go to state 41
-    SuperPrimary  go to state 42
-    Name          go to state 43
+    Expression    go to state 46
+    Term          go to state 40
+    Factor        go to state 41
+    Primary       go to state 42
+    MorePrimary   go to state 43
+    SuperPrimary  go to state 44
+    Name          go to state 45
 
 
 State 20
@@ -379,7 +387,7 @@ State 20
    15 Statement: OUTPUT . '(' Expression ')'
    16          | OUTPUT . '(' Statement_1
 
-    '('  shift, and go to state 45
+    '('  shift, and go to state 47
 
 
 State 21
@@ -401,22 +409,22 @@ State 23
    12 Body_1: Statement . END
    13       | Statement . ';' Body_1
 
-    END  shift, and go to state 46
-    ';'  shift, and go to state 47
+    END  shift, and go to state 48
+    ';'  shift, and go to state 49
 
 
 State 24
 
    14 Statement: Name . ASSIGNMENT Expression
 
-    ASSIGNMENT  shift, and go to state 48
+    ASSIGNMENT  shift, and go to state 50
 
 
 State 25
 
     1 Tiny: PROGRAM Name ':' Dclns Body Name . '.'
 
-    '.'  shift, and go to state 49
+    '.'  shift, and go to state 51
 
 
 State 26
@@ -456,101 +464,123 @@ State 30
 
 State 31
 
+   51 SuperPrimary: BOOLEAN_FALSE .
+
+    $default  reduce using rule 51 (SuperPrimary)
+
+
+State 32
+
    47 SuperPrimary: READ .
 
     $default  reduce using rule 47 (SuperPrimary)
 
 
-State 32
+State 33
+
+   50 SuperPrimary: BOOLEAN_TRUE .
+
+    $default  reduce using rule 50 (SuperPrimary)
+
+
+State 34
 
    43 Primary: NOT . Primary
 
-    IDENTIFIER   shift, and go to state 3
-    READ         shift, and go to state 31
-    NOT          shift, and go to state 32
-    INTEGER_NUM  shift, and go to state 33
-    '('          shift, and go to state 34
-    '+'          shift, and go to state 35
-    '-'          shift, and go to state 36
+    IDENTIFIER     shift, and go to state 3
+    BOOLEAN_FALSE  shift, and go to state 31
+    READ           shift, and go to state 32
+    BOOLEAN_TRUE   shift, and go to state 33
+    NOT            shift, and go to state 34
+    INTEGER_NUM    shift, and go to state 35
+    '('            shift, and go to state 36
+    '+'            shift, and go to state 37
+    '-'            shift, and go to state 38
 
-    Primary       go to state 50
-    MorePrimary   go to state 41
-    SuperPrimary  go to state 42
-    Name          go to state 43
+    Primary       go to state 52
+    MorePrimary   go to state 43
+    SuperPrimary  go to state 44
+    Name          go to state 45
 
 
-State 33
+State 35
 
    49 SuperPrimary: INTEGER_NUM .
 
     $default  reduce using rule 49 (SuperPrimary)
 
 
-State 34
-
-   50 SuperPrimary: '(' . Expression ')'
-
-    IDENTIFIER   shift, and go to state 3
-    READ         shift, and go to state 31
-    NOT          shift, and go to state 32
-    INTEGER_NUM  shift, and go to state 33
-    '('          shift, and go to state 34
-    '+'          shift, and go to state 35
-    '-'          shift, and go to state 36
-
-    Expression    go to state 51
-    Term          go to state 38
-    Factor        go to state 39
-    Primary       go to state 40
-    MorePrimary   go to state 41
-    SuperPrimary  go to state 42
-    Name          go to state 43
-
-
-State 35
-
-   42 Primary: '+' . Primary
-
-    IDENTIFIER   shift, and go to state 3
-    READ         shift, and go to state 31
-    NOT          shift, and go to state 32
-    INTEGER_NUM  shift, and go to state 33
-    '('          shift, and go to state 34
-    '+'          shift, and go to state 35
-    '-'          shift, and go to state 36
-
-    Primary       go to state 52
-    MorePrimary   go to state 41
-    SuperPrimary  go to state 42
-    Name          go to state 43
-
-
 State 36
 
-   41 Primary: '-' . Primary
+   52 SuperPrimary: '(' . Expression ')'
 
-    IDENTIFIER   shift, and go to state 3
-    READ         shift, and go to state 31
-    NOT          shift, and go to state 32
-    INTEGER_NUM  shift, and go to state 33
-    '('          shift, and go to state 34
-    '+'          shift, and go to state 35
-    '-'          shift, and go to state 36
+    IDENTIFIER     shift, and go to state 3
+    BOOLEAN_FALSE  shift, and go to state 31
+    READ           shift, and go to state 32
+    BOOLEAN_TRUE   shift, and go to state 33
+    NOT            shift, and go to state 34
+    INTEGER_NUM    shift, and go to state 35
+    '('            shift, and go to state 36
+    '+'            shift, and go to state 37
+    '-'            shift, and go to state 38
 
-    Primary       go to state 53
-    MorePrimary   go to state 41
-    SuperPrimary  go to state 42
-    Name          go to state 43
+    Expression    go to state 53
+    Term          go to state 40
+    Factor        go to state 41
+    Primary       go to state 42
+    MorePrimary   go to state 43
+    SuperPrimary  go to state 44
+    Name          go to state 45
 
 
 State 37
 
-   17 Statement: IF Expression . THEN Statement Statement_1_1
+   42 Primary: '+' . Primary
 
-    THEN  shift, and go to state 54
+    IDENTIFIER     shift, and go to state 3
+    BOOLEAN_FALSE  shift, and go to state 31
+    READ           shift, and go to state 32
+    BOOLEAN_TRUE   shift, and go to state 33
+    NOT            shift, and go to state 34
+    INTEGER_NUM    shift, and go to state 35
+    '('            shift, and go to state 36
+    '+'            shift, and go to state 37
+    '-'            shift, and go to state 38
+
+    Primary       go to state 54
+    MorePrimary   go to state 43
+    SuperPrimary  go to state 44
+    Name          go to state 45
 
 
 State 38
+
+   41 Primary: '-' . Primary
+
+    IDENTIFIER     shift, and go to state 3
+    BOOLEAN_FALSE  shift, and go to state 31
+    READ           shift, and go to state 32
+    BOOLEAN_TRUE   shift, and go to state 33
+    NOT            shift, and go to state 34
+    INTEGER_NUM    shift, and go to state 35
+    '('            shift, and go to state 36
+    '+'            shift, and go to state 37
+    '-'            shift, and go to state 38
+
+    Primary       go to state 55
+    MorePrimary   go to state 43
+    SuperPrimary  go to state 44
+    Name          go to state 45
+
+
+State 39
+
+   17 Statement: IF Expression . THEN Statement Statement_1_1
+
+    THEN  shift, and go to state 56
+
+
+State 40
 
    25 Expression: Term .
    26           | Term . LTE Term
@@ -563,20 +593,20 @@ State 38
    34     | Term . '-' Factor
    35     | Term . OR Factor
 
-    NEQ  shift, and go to state 55
-    GT   shift, and go to state 56
-    EQ   shift, and go to state 57
-    GTE  shift, and go to state 58
-    LTE  shift, and go to state 59
-    OR   shift, and go to state 60
-    LT   shift, and go to state 61
-    '+'  shift, and go to state 62
-    '-'  shift, and go to state 63
+    NEQ  shift, and go to state 57
+    GT   shift, and go to state 58
+    EQ   shift, and go to state 59
+    GTE  shift, and go to state 60
+    LTE  shift, and go to state 61
+    OR   shift, and go to state 62
+    LT   shift, and go to state 63
+    '+'  shift, and go to state 64
+    '-'  shift, and go to state 65
 
     $default  reduce using rule 25 (Expression)
 
 
-State 39
+State 41
 
    32 Term: Factor .
    37 Factor: Factor . '*' Primary
@@ -584,83 +614,85 @@ State 39
    39       | Factor . AND Primary
    40       | Factor . MOD Primary
 
-    MOD  shift, and go to state 64
-    AND  shift, and go to state 65
-    '*'  shift, and go to state 66
-    '/'  shift, and go to state 67
+    MOD  shift, and go to state 66
+    AND  shift, and go to state 67
+    '*'  shift, and go to state 68
+    '/'  shift, and go to state 69
 
     $default  reduce using rule 32 (Term)
 
 
-State 40
+State 42
 
    36 Factor: Primary .
 
     $default  reduce using rule 36 (Factor)
 
 
-State 41
+State 43
 
    44 Primary: MorePrimary .
 
     $default  reduce using rule 44 (Primary)
 
 
-State 42
+State 44
 
    45 MorePrimary: SuperPrimary . EXP MorePrimary
    46            | SuperPrimary .
 
-    EXP  shift, and go to state 68
+    EXP  shift, and go to state 70
 
     $default  reduce using rule 46 (MorePrimary)
 
 
-State 43
+State 45
 
    48 SuperPrimary: Name .
 
     $default  reduce using rule 48 (SuperPrimary)
 
 
-State 44
+State 46
 
    18 Statement: WHILE Expression . DO Statement
 
-    DO  shift, and go to state 69
+    DO  shift, and go to state 71
 
 
-State 45
+State 47
 
    15 Statement: OUTPUT '(' . Expression ')'
    16          | OUTPUT '(' . Statement_1
 
-    IDENTIFIER   shift, and go to state 3
-    READ         shift, and go to state 31
-    NOT          shift, and go to state 32
-    INTEGER_NUM  shift, and go to state 33
-    '('          shift, and go to state 34
-    '+'          shift, and go to state 35
-    '-'          shift, and go to state 36
+    IDENTIFIER     shift, and go to state 3
+    BOOLEAN_FALSE  shift, and go to state 31
+    READ           shift, and go to state 32
+    BOOLEAN_TRUE   shift, and go to state 33
+    NOT            shift, and go to state 34
+    INTEGER_NUM    shift, and go to state 35
+    '('            shift, and go to state 36
+    '+'            shift, and go to state 37
+    '-'            shift, and go to state 38
 
-    Statement_1   go to state 70
-    Expression    go to state 71
-    Term          go to state 38
-    Factor        go to state 39
-    Primary       go to state 40
-    MorePrimary   go to state 41
-    SuperPrimary  go to state 42
-    Name          go to state 43
+    Statement_1   go to state 72
+    Expression    go to state 73
+    Term          go to state 40
+    Factor        go to state 41
+    Primary       go to state 42
+    MorePrimary   go to state 43
+    SuperPrimary  go to state 44
+    Name          go to state 45
 
 
-State 46
+State 48
 
    12 Body_1: Statement END .
 
     $default  reduce using rule 12 (Body_1)
 
 
-State 47
+State 49
 
    13 Body_1: Statement ';' . Body_1
 
@@ -673,68 +705,70 @@ State 47
     $default  reduce using rule 20 (Statement)
 
     Body       go to state 21
-    Body_1     go to state 72
+    Body_1     go to state 74
     Statement  go to state 23
     Name       go to state 24
 
 
-State 48
+State 50
 
    14 Statement: Name ASSIGNMENT . Expression
 
-    IDENTIFIER   shift, and go to state 3
-    READ         shift, and go to state 31
-    NOT          shift, and go to state 32
-    INTEGER_NUM  shift, and go to state 33
-    '('          shift, and go to state 34
-    '+'          shift, and go to state 35
-    '-'          shift, and go to state 36
+    IDENTIFIER     shift, and go to state 3
+    BOOLEAN_FALSE  shift, and go to state 31
+    READ           shift, and go to state 32
+    BOOLEAN_TRUE   shift, and go to state 33
+    NOT            shift, and go to state 34
+    INTEGER_NUM    shift, and go to state 35
+    '('            shift, and go to state 36
+    '+'            shift, and go to state 37
+    '-'            shift, and go to state 38
 
-    Expression    go to state 73
-    Term          go to state 38
-    Factor        go to state 39
-    Primary       go to state 40
-    MorePrimary   go to state 41
-    SuperPrimary  go to state 42
-    Name          go to state 43
+    Expression    go to state 75
+    Term          go to state 40
+    Factor        go to state 41
+    Primary       go to state 42
+    MorePrimary   go to state 43
+    SuperPrimary  go to state 44
+    Name          go to state 45
 
 
-State 49
+State 51
 
     1 Tiny: PROGRAM Name ':' Dclns Body Name '.' .
 
     $default  reduce using rule 1 (Tiny)
 
 
-State 50
+State 52
 
    43 Primary: NOT Primary .
 
     $default  reduce using rule 43 (Primary)
 
 
-State 51
+State 53
 
-   50 SuperPrimary: '(' Expression . ')'
+   52 SuperPrimary: '(' Expression . ')'
 
-    ')'  shift, and go to state 74
+    ')'  shift, and go to state 76
 
 
-State 52
+State 54
 
    42 Primary: '+' Primary .
 
     $default  reduce using rule 42 (Primary)
 
 
-State 53
+State 55
 
    41 Primary: '-' Primary .
 
     $default  reduce using rule 41 (Primary)
 
 
-State 54
+State 56
 
    17 Statement: IF Expression THEN . Statement Statement_1_1
 
@@ -747,274 +781,302 @@ State 54
     $default  reduce using rule 20 (Statement)
 
     Body       go to state 21
-    Statement  go to state 75
+    Statement  go to state 77
     Name       go to state 24
-
-
-State 55
-
-   31 Expression: Term NEQ . Term
-
-    IDENTIFIER   shift, and go to state 3
-    READ         shift, and go to state 31
-    NOT          shift, and go to state 32
-    INTEGER_NUM  shift, and go to state 33
-    '('          shift, and go to state 34
-    '+'          shift, and go to state 35
-    '-'          shift, and go to state 36
-
-    Term          go to state 76
-    Factor        go to state 39
-    Primary       go to state 40
-    MorePrimary   go to state 41
-    SuperPrimary  go to state 42
-    Name          go to state 43
-
-
-State 56
-
-   29 Expression: Term GT . Term
-
-    IDENTIFIER   shift, and go to state 3
-    READ         shift, and go to state 31
-    NOT          shift, and go to state 32
-    INTEGER_NUM  shift, and go to state 33
-    '('          shift, and go to state 34
-    '+'          shift, and go to state 35
-    '-'          shift, and go to state 36
-
-    Term          go to state 77
-    Factor        go to state 39
-    Primary       go to state 40
-    MorePrimary   go to state 41
-    SuperPrimary  go to state 42
-    Name          go to state 43
 
 
 State 57
 
-   30 Expression: Term EQ . Term
+   31 Expression: Term NEQ . Term
 
-    IDENTIFIER   shift, and go to state 3
-    READ         shift, and go to state 31
-    NOT          shift, and go to state 32
-    INTEGER_NUM  shift, and go to state 33
-    '('          shift, and go to state 34
-    '+'          shift, and go to state 35
-    '-'          shift, and go to state 36
+    IDENTIFIER     shift, and go to state 3
+    BOOLEAN_FALSE  shift, and go to state 31
+    READ           shift, and go to state 32
+    BOOLEAN_TRUE   shift, and go to state 33
+    NOT            shift, and go to state 34
+    INTEGER_NUM    shift, and go to state 35
+    '('            shift, and go to state 36
+    '+'            shift, and go to state 37
+    '-'            shift, and go to state 38
 
     Term          go to state 78
-    Factor        go to state 39
-    Primary       go to state 40
-    MorePrimary   go to state 41
-    SuperPrimary  go to state 42
-    Name          go to state 43
+    Factor        go to state 41
+    Primary       go to state 42
+    MorePrimary   go to state 43
+    SuperPrimary  go to state 44
+    Name          go to state 45
 
 
 State 58
 
-   27 Expression: Term GTE . Term
+   29 Expression: Term GT . Term
 
-    IDENTIFIER   shift, and go to state 3
-    READ         shift, and go to state 31
-    NOT          shift, and go to state 32
-    INTEGER_NUM  shift, and go to state 33
-    '('          shift, and go to state 34
-    '+'          shift, and go to state 35
-    '-'          shift, and go to state 36
+    IDENTIFIER     shift, and go to state 3
+    BOOLEAN_FALSE  shift, and go to state 31
+    READ           shift, and go to state 32
+    BOOLEAN_TRUE   shift, and go to state 33
+    NOT            shift, and go to state 34
+    INTEGER_NUM    shift, and go to state 35
+    '('            shift, and go to state 36
+    '+'            shift, and go to state 37
+    '-'            shift, and go to state 38
 
     Term          go to state 79
-    Factor        go to state 39
-    Primary       go to state 40
-    MorePrimary   go to state 41
-    SuperPrimary  go to state 42
-    Name          go to state 43
+    Factor        go to state 41
+    Primary       go to state 42
+    MorePrimary   go to state 43
+    SuperPrimary  go to state 44
+    Name          go to state 45
 
 
 State 59
 
-   26 Expression: Term LTE . Term
+   30 Expression: Term EQ . Term
 
-    IDENTIFIER   shift, and go to state 3
-    READ         shift, and go to state 31
-    NOT          shift, and go to state 32
-    INTEGER_NUM  shift, and go to state 33
-    '('          shift, and go to state 34
-    '+'          shift, and go to state 35
-    '-'          shift, and go to state 36
+    IDENTIFIER     shift, and go to state 3
+    BOOLEAN_FALSE  shift, and go to state 31
+    READ           shift, and go to state 32
+    BOOLEAN_TRUE   shift, and go to state 33
+    NOT            shift, and go to state 34
+    INTEGER_NUM    shift, and go to state 35
+    '('            shift, and go to state 36
+    '+'            shift, and go to state 37
+    '-'            shift, and go to state 38
 
     Term          go to state 80
-    Factor        go to state 39
-    Primary       go to state 40
-    MorePrimary   go to state 41
-    SuperPrimary  go to state 42
-    Name          go to state 43
+    Factor        go to state 41
+    Primary       go to state 42
+    MorePrimary   go to state 43
+    SuperPrimary  go to state 44
+    Name          go to state 45
 
 
 State 60
 
-   35 Term: Term OR . Factor
+   27 Expression: Term GTE . Term
 
-    IDENTIFIER   shift, and go to state 3
-    READ         shift, and go to state 31
-    NOT          shift, and go to state 32
-    INTEGER_NUM  shift, and go to state 33
-    '('          shift, and go to state 34
-    '+'          shift, and go to state 35
-    '-'          shift, and go to state 36
+    IDENTIFIER     shift, and go to state 3
+    BOOLEAN_FALSE  shift, and go to state 31
+    READ           shift, and go to state 32
+    BOOLEAN_TRUE   shift, and go to state 33
+    NOT            shift, and go to state 34
+    INTEGER_NUM    shift, and go to state 35
+    '('            shift, and go to state 36
+    '+'            shift, and go to state 37
+    '-'            shift, and go to state 38
 
-    Factor        go to state 81
-    Primary       go to state 40
-    MorePrimary   go to state 41
-    SuperPrimary  go to state 42
-    Name          go to state 43
+    Term          go to state 81
+    Factor        go to state 41
+    Primary       go to state 42
+    MorePrimary   go to state 43
+    SuperPrimary  go to state 44
+    Name          go to state 45
 
 
 State 61
 
-   28 Expression: Term LT . Term
+   26 Expression: Term LTE . Term
 
-    IDENTIFIER   shift, and go to state 3
-    READ         shift, and go to state 31
-    NOT          shift, and go to state 32
-    INTEGER_NUM  shift, and go to state 33
-    '('          shift, and go to state 34
-    '+'          shift, and go to state 35
-    '-'          shift, and go to state 36
+    IDENTIFIER     shift, and go to state 3
+    BOOLEAN_FALSE  shift, and go to state 31
+    READ           shift, and go to state 32
+    BOOLEAN_TRUE   shift, and go to state 33
+    NOT            shift, and go to state 34
+    INTEGER_NUM    shift, and go to state 35
+    '('            shift, and go to state 36
+    '+'            shift, and go to state 37
+    '-'            shift, and go to state 38
 
     Term          go to state 82
-    Factor        go to state 39
-    Primary       go to state 40
-    MorePrimary   go to state 41
-    SuperPrimary  go to state 42
-    Name          go to state 43
+    Factor        go to state 41
+    Primary       go to state 42
+    MorePrimary   go to state 43
+    SuperPrimary  go to state 44
+    Name          go to state 45
 
 
 State 62
 
-   33 Term: Term '+' . Factor
+   35 Term: Term OR . Factor
 
-    IDENTIFIER   shift, and go to state 3
-    READ         shift, and go to state 31
-    NOT          shift, and go to state 32
-    INTEGER_NUM  shift, and go to state 33
-    '('          shift, and go to state 34
-    '+'          shift, and go to state 35
-    '-'          shift, and go to state 36
+    IDENTIFIER     shift, and go to state 3
+    BOOLEAN_FALSE  shift, and go to state 31
+    READ           shift, and go to state 32
+    BOOLEAN_TRUE   shift, and go to state 33
+    NOT            shift, and go to state 34
+    INTEGER_NUM    shift, and go to state 35
+    '('            shift, and go to state 36
+    '+'            shift, and go to state 37
+    '-'            shift, and go to state 38
 
     Factor        go to state 83
-    Primary       go to state 40
-    MorePrimary   go to state 41
-    SuperPrimary  go to state 42
-    Name          go to state 43
+    Primary       go to state 42
+    MorePrimary   go to state 43
+    SuperPrimary  go to state 44
+    Name          go to state 45
 
 
 State 63
 
-   34 Term: Term '-' . Factor
+   28 Expression: Term LT . Term
 
-    IDENTIFIER   shift, and go to state 3
-    READ         shift, and go to state 31
-    NOT          shift, and go to state 32
-    INTEGER_NUM  shift, and go to state 33
-    '('          shift, and go to state 34
-    '+'          shift, and go to state 35
-    '-'          shift, and go to state 36
+    IDENTIFIER     shift, and go to state 3
+    BOOLEAN_FALSE  shift, and go to state 31
+    READ           shift, and go to state 32
+    BOOLEAN_TRUE   shift, and go to state 33
+    NOT            shift, and go to state 34
+    INTEGER_NUM    shift, and go to state 35
+    '('            shift, and go to state 36
+    '+'            shift, and go to state 37
+    '-'            shift, and go to state 38
 
-    Factor        go to state 84
-    Primary       go to state 40
-    MorePrimary   go to state 41
-    SuperPrimary  go to state 42
-    Name          go to state 43
+    Term          go to state 84
+    Factor        go to state 41
+    Primary       go to state 42
+    MorePrimary   go to state 43
+    SuperPrimary  go to state 44
+    Name          go to state 45
 
 
 State 64
 
-   40 Factor: Factor MOD . Primary
+   33 Term: Term '+' . Factor
 
-    IDENTIFIER   shift, and go to state 3
-    READ         shift, and go to state 31
-    NOT          shift, and go to state 32
-    INTEGER_NUM  shift, and go to state 33
-    '('          shift, and go to state 34
-    '+'          shift, and go to state 35
-    '-'          shift, and go to state 36
+    IDENTIFIER     shift, and go to state 3
+    BOOLEAN_FALSE  shift, and go to state 31
+    READ           shift, and go to state 32
+    BOOLEAN_TRUE   shift, and go to state 33
+    NOT            shift, and go to state 34
+    INTEGER_NUM    shift, and go to state 35
+    '('            shift, and go to state 36
+    '+'            shift, and go to state 37
+    '-'            shift, and go to state 38
 
-    Primary       go to state 85
-    MorePrimary   go to state 41
-    SuperPrimary  go to state 42
-    Name          go to state 43
+    Factor        go to state 85
+    Primary       go to state 42
+    MorePrimary   go to state 43
+    SuperPrimary  go to state 44
+    Name          go to state 45
 
 
 State 65
 
-   39 Factor: Factor AND . Primary
+   34 Term: Term '-' . Factor
 
-    IDENTIFIER   shift, and go to state 3
-    READ         shift, and go to state 31
-    NOT          shift, and go to state 32
-    INTEGER_NUM  shift, and go to state 33
-    '('          shift, and go to state 34
-    '+'          shift, and go to state 35
-    '-'          shift, and go to state 36
+    IDENTIFIER     shift, and go to state 3
+    BOOLEAN_FALSE  shift, and go to state 31
+    READ           shift, and go to state 32
+    BOOLEAN_TRUE   shift, and go to state 33
+    NOT            shift, and go to state 34
+    INTEGER_NUM    shift, and go to state 35
+    '('            shift, and go to state 36
+    '+'            shift, and go to state 37
+    '-'            shift, and go to state 38
 
-    Primary       go to state 86
-    MorePrimary   go to state 41
-    SuperPrimary  go to state 42
-    Name          go to state 43
+    Factor        go to state 86
+    Primary       go to state 42
+    MorePrimary   go to state 43
+    SuperPrimary  go to state 44
+    Name          go to state 45
 
 
 State 66
 
-   37 Factor: Factor '*' . Primary
+   40 Factor: Factor MOD . Primary
 
-    IDENTIFIER   shift, and go to state 3
-    READ         shift, and go to state 31
-    NOT          shift, and go to state 32
-    INTEGER_NUM  shift, and go to state 33
-    '('          shift, and go to state 34
-    '+'          shift, and go to state 35
-    '-'          shift, and go to state 36
+    IDENTIFIER     shift, and go to state 3
+    BOOLEAN_FALSE  shift, and go to state 31
+    READ           shift, and go to state 32
+    BOOLEAN_TRUE   shift, and go to state 33
+    NOT            shift, and go to state 34
+    INTEGER_NUM    shift, and go to state 35
+    '('            shift, and go to state 36
+    '+'            shift, and go to state 37
+    '-'            shift, and go to state 38
 
     Primary       go to state 87
-    MorePrimary   go to state 41
-    SuperPrimary  go to state 42
-    Name          go to state 43
+    MorePrimary   go to state 43
+    SuperPrimary  go to state 44
+    Name          go to state 45
 
 
 State 67
 
-   38 Factor: Factor '/' . Primary
+   39 Factor: Factor AND . Primary
 
-    IDENTIFIER   shift, and go to state 3
-    READ         shift, and go to state 31
-    NOT          shift, and go to state 32
-    INTEGER_NUM  shift, and go to state 33
-    '('          shift, and go to state 34
-    '+'          shift, and go to state 35
-    '-'          shift, and go to state 36
+    IDENTIFIER     shift, and go to state 3
+    BOOLEAN_FALSE  shift, and go to state 31
+    READ           shift, and go to state 32
+    BOOLEAN_TRUE   shift, and go to state 33
+    NOT            shift, and go to state 34
+    INTEGER_NUM    shift, and go to state 35
+    '('            shift, and go to state 36
+    '+'            shift, and go to state 37
+    '-'            shift, and go to state 38
 
     Primary       go to state 88
-    MorePrimary   go to state 41
-    SuperPrimary  go to state 42
-    Name          go to state 43
+    MorePrimary   go to state 43
+    SuperPrimary  go to state 44
+    Name          go to state 45
 
 
 State 68
 
-   45 MorePrimary: SuperPrimary EXP . MorePrimary
+   37 Factor: Factor '*' . Primary
 
-    IDENTIFIER   shift, and go to state 3
-    READ         shift, and go to state 31
-    INTEGER_NUM  shift, and go to state 33
-    '('          shift, and go to state 34
+    IDENTIFIER     shift, and go to state 3
+    BOOLEAN_FALSE  shift, and go to state 31
+    READ           shift, and go to state 32
+    BOOLEAN_TRUE   shift, and go to state 33
+    NOT            shift, and go to state 34
+    INTEGER_NUM    shift, and go to state 35
+    '('            shift, and go to state 36
+    '+'            shift, and go to state 37
+    '-'            shift, and go to state 38
 
-    MorePrimary   go to state 89
-    SuperPrimary  go to state 42
-    Name          go to state 43
+    Primary       go to state 89
+    MorePrimary   go to state 43
+    SuperPrimary  go to state 44
+    Name          go to state 45
 
 
 State 69
+
+   38 Factor: Factor '/' . Primary
+
+    IDENTIFIER     shift, and go to state 3
+    BOOLEAN_FALSE  shift, and go to state 31
+    READ           shift, and go to state 32
+    BOOLEAN_TRUE   shift, and go to state 33
+    NOT            shift, and go to state 34
+    INTEGER_NUM    shift, and go to state 35
+    '('            shift, and go to state 36
+    '+'            shift, and go to state 37
+    '-'            shift, and go to state 38
+
+    Primary       go to state 90
+    MorePrimary   go to state 43
+    SuperPrimary  go to state 44
+    Name          go to state 45
+
+
+State 70
+
+   45 MorePrimary: SuperPrimary EXP . MorePrimary
+
+    IDENTIFIER     shift, and go to state 3
+    BOOLEAN_FALSE  shift, and go to state 31
+    READ           shift, and go to state 32
+    BOOLEAN_TRUE   shift, and go to state 33
+    INTEGER_NUM    shift, and go to state 35
+    '('            shift, and go to state 36
+
+    MorePrimary   go to state 91
+    SuperPrimary  go to state 44
+    Name          go to state 45
+
+
+State 71
 
    18 Statement: WHILE Expression DO . Statement
 
@@ -1027,131 +1089,131 @@ State 69
     $default  reduce using rule 20 (Statement)
 
     Body       go to state 21
-    Statement  go to state 90
+    Statement  go to state 92
     Name       go to state 24
 
 
-State 70
+State 72
 
    16 Statement: OUTPUT '(' Statement_1 .
 
     $default  reduce using rule 16 (Statement)
 
 
-State 71
+State 73
 
    15 Statement: OUTPUT '(' Expression . ')'
    23 Statement_1: Expression . ')'
    24            | Expression . ',' Statement_1
 
-    ','  shift, and go to state 91
-    ')'  shift, and go to state 92
+    ','  shift, and go to state 93
+    ')'  shift, and go to state 94
 
 
-State 72
+State 74
 
    13 Body_1: Statement ';' Body_1 .
 
     $default  reduce using rule 13 (Body_1)
 
 
-State 73
+State 75
 
    14 Statement: Name ASSIGNMENT Expression .
 
     $default  reduce using rule 14 (Statement)
 
 
-State 74
+State 76
 
-   50 SuperPrimary: '(' Expression ')' .
+   52 SuperPrimary: '(' Expression ')' .
 
-    $default  reduce using rule 50 (SuperPrimary)
+    $default  reduce using rule 52 (SuperPrimary)
 
 
-State 75
+State 77
 
    17 Statement: IF Expression THEN Statement . Statement_1_1
 
-    ELSE  shift, and go to state 93
+    ELSE  shift, and go to state 95
 
     ELSE      [reduce using rule 21 (Statement_1_1)]
     $default  reduce using rule 21 (Statement_1_1)
 
-    Statement_1_1  go to state 94
+    Statement_1_1  go to state 96
 
 
-State 76
+State 78
 
    31 Expression: Term NEQ Term .
    33 Term: Term . '+' Factor
    34     | Term . '-' Factor
    35     | Term . OR Factor
 
-    OR   shift, and go to state 60
-    '+'  shift, and go to state 62
-    '-'  shift, and go to state 63
+    OR   shift, and go to state 62
+    '+'  shift, and go to state 64
+    '-'  shift, and go to state 65
 
     $default  reduce using rule 31 (Expression)
 
 
-State 77
+State 79
 
    29 Expression: Term GT Term .
    33 Term: Term . '+' Factor
    34     | Term . '-' Factor
    35     | Term . OR Factor
 
-    OR   shift, and go to state 60
-    '+'  shift, and go to state 62
-    '-'  shift, and go to state 63
+    OR   shift, and go to state 62
+    '+'  shift, and go to state 64
+    '-'  shift, and go to state 65
 
     $default  reduce using rule 29 (Expression)
 
 
-State 78
+State 80
 
    30 Expression: Term EQ Term .
    33 Term: Term . '+' Factor
    34     | Term . '-' Factor
    35     | Term . OR Factor
 
-    OR   shift, and go to state 60
-    '+'  shift, and go to state 62
-    '-'  shift, and go to state 63
+    OR   shift, and go to state 62
+    '+'  shift, and go to state 64
+    '-'  shift, and go to state 65
 
     $default  reduce using rule 30 (Expression)
 
 
-State 79
+State 81
 
    27 Expression: Term GTE Term .
    33 Term: Term . '+' Factor
    34     | Term . '-' Factor
    35     | Term . OR Factor
 
-    OR   shift, and go to state 60
-    '+'  shift, and go to state 62
-    '-'  shift, and go to state 63
+    OR   shift, and go to state 62
+    '+'  shift, and go to state 64
+    '-'  shift, and go to state 65
 
     $default  reduce using rule 27 (Expression)
 
 
-State 80
+State 82
 
    26 Expression: Term LTE Term .
    33 Term: Term . '+' Factor
    34     | Term . '-' Factor
    35     | Term . OR Factor
 
-    OR   shift, and go to state 60
-    '+'  shift, and go to state 62
-    '-'  shift, and go to state 63
+    OR   shift, and go to state 62
+    '+'  shift, and go to state 64
+    '-'  shift, and go to state 65
 
     $default  reduce using rule 26 (Expression)
 
 
-State 81
+State 83
 
    35 Term: Term OR Factor .
    37 Factor: Factor . '*' Primary
@@ -1159,29 +1221,29 @@ State 81
    39       | Factor . AND Primary
    40       | Factor . MOD Primary
 
-    MOD  shift, and go to state 64
-    AND  shift, and go to state 65
-    '*'  shift, and go to state 66
-    '/'  shift, and go to state 67
+    MOD  shift, and go to state 66
+    AND  shift, and go to state 67
+    '*'  shift, and go to state 68
+    '/'  shift, and go to state 69
 
     $default  reduce using rule 35 (Term)
 
 
-State 82
+State 84
 
    28 Expression: Term LT Term .
    33 Term: Term . '+' Factor
    34     | Term . '-' Factor
    35     | Term . OR Factor
 
-    OR   shift, and go to state 60
-    '+'  shift, and go to state 62
-    '-'  shift, and go to state 63
+    OR   shift, and go to state 62
+    '+'  shift, and go to state 64
+    '-'  shift, and go to state 65
 
     $default  reduce using rule 28 (Expression)
 
 
-State 83
+State 85
 
    33 Term: Term '+' Factor .
    37 Factor: Factor . '*' Primary
@@ -1189,15 +1251,15 @@ State 83
    39       | Factor . AND Primary
    40       | Factor . MOD Primary
 
-    MOD  shift, and go to state 64
-    AND  shift, and go to state 65
-    '*'  shift, and go to state 66
-    '/'  shift, and go to state 67
+    MOD  shift, and go to state 66
+    AND  shift, and go to state 67
+    '*'  shift, and go to state 68
+    '/'  shift, and go to state 69
 
     $default  reduce using rule 33 (Term)
 
 
-State 84
+State 86
 
    34 Term: Term '-' Factor .
    37 Factor: Factor . '*' Primary
@@ -1205,79 +1267,81 @@ State 84
    39       | Factor . AND Primary
    40       | Factor . MOD Primary
 
-    MOD  shift, and go to state 64
-    AND  shift, and go to state 65
-    '*'  shift, and go to state 66
-    '/'  shift, and go to state 67
+    MOD  shift, and go to state 66
+    AND  shift, and go to state 67
+    '*'  shift, and go to state 68
+    '/'  shift, and go to state 69
 
     $default  reduce using rule 34 (Term)
 
 
-State 85
+State 87
 
    40 Factor: Factor MOD Primary .
 
     $default  reduce using rule 40 (Factor)
 
 
-State 86
+State 88
 
    39 Factor: Factor AND Primary .
 
     $default  reduce using rule 39 (Factor)
 
 
-State 87
+State 89
 
    37 Factor: Factor '*' Primary .
 
     $default  reduce using rule 37 (Factor)
 
 
-State 88
+State 90
 
    38 Factor: Factor '/' Primary .
 
     $default  reduce using rule 38 (Factor)
 
 
-State 89
+State 91
 
    45 MorePrimary: SuperPrimary EXP MorePrimary .
 
     $default  reduce using rule 45 (MorePrimary)
 
 
-State 90
+State 92
 
    18 Statement: WHILE Expression DO Statement .
 
     $default  reduce using rule 18 (Statement)
 
 
-State 91
+State 93
 
    24 Statement_1: Expression ',' . Statement_1
 
-    IDENTIFIER   shift, and go to state 3
-    READ         shift, and go to state 31
-    NOT          shift, and go to state 32
-    INTEGER_NUM  shift, and go to state 33
-    '('          shift, and go to state 34
-    '+'          shift, and go to state 35
-    '-'          shift, and go to state 36
+    IDENTIFIER     shift, and go to state 3
+    BOOLEAN_FALSE  shift, and go to state 31
+    READ           shift, and go to state 32
+    BOOLEAN_TRUE   shift, and go to state 33
+    NOT            shift, and go to state 34
+    INTEGER_NUM    shift, and go to state 35
+    '('            shift, and go to state 36
+    '+'            shift, and go to state 37
+    '-'            shift, and go to state 38
 
-    Statement_1   go to state 95
-    Expression    go to state 96
-    Term          go to state 38
-    Factor        go to state 39
-    Primary       go to state 40
-    MorePrimary   go to state 41
-    SuperPrimary  go to state 42
-    Name          go to state 43
+    Statement_1   go to state 97
+    Expression    go to state 98
+    Term          go to state 40
+    Factor        go to state 41
+    Primary       go to state 42
+    MorePrimary   go to state 43
+    SuperPrimary  go to state 44
+    Name          go to state 45
 
 
-State 92
+State 94
 
    15 Statement: OUTPUT '(' Expression ')' .
    23 Statement_1: Expression ')' .
@@ -1291,7 +1355,7 @@ State 92
     $default  reduce using rule 15 (Statement)
 
 
-State 93
+State 95
 
    22 Statement_1_1: ELSE . Statement
 
@@ -1304,41 +1368,41 @@ State 93
     $default  reduce using rule 20 (Statement)
 
     Body       go to state 21
-    Statement  go to state 97
+    Statement  go to state 99
     Name       go to state 24
 
 
-State 94
+State 96
 
    17 Statement: IF Expression THEN Statement Statement_1_1 .
 
     $default  reduce using rule 17 (Statement)
 
 
-State 95
+State 97
 
    24 Statement_1: Expression ',' Statement_1 .
 
     $default  reduce using rule 24 (Statement_1)
 
 
-State 96
+State 98
 
    23 Statement_1: Expression . ')'
    24            | Expression . ',' Statement_1
 
-    ','  shift, and go to state 91
-    ')'  shift, and go to state 98
+    ','  shift, and go to state 93
+    ')'  shift, and go to state 100
 
 
-State 97
+State 99
 
    22 Statement_1_1: ELSE Statement .
 
     $default  reduce using rule 22 (Statement_1_1)
 
 
-State 98
+State 100
 
    23 Statement_1: Expression ')' .
 

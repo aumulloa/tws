@@ -52,6 +52,8 @@ MorePrimary -> SuperPrimary EXP MorePrimary              => "**"
 SuperPrimary -> READ                                      => "read"
              -> Name
              -> INTEGER_NUM                               => "<integer>"
+             -> BOOLEAN_TRUE                              => "<boolean>"
+             -> BOOLEAN_FALSE                              => "<booleanf>"
              -> '(' Expression ')';
 
 Name        -> IDENTIFIER				                          => "<identifier>";
