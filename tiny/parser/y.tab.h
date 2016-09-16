@@ -45,43 +45,53 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    END = 258,
-    VAR = 259,
-    IDENTIFIER = 260,
-    IF = 261,
-    READ = 262,
-    ELSE = 263,
-    THEN = 264,
-    WHILE = 265,
-    OUTPUT = 266,
-    DO = 267,
-    BEGINX = 268,
-    BOOLEAN = 269,
-    INTEGER_NUM = 270,
-    INTEGER = 271,
-    LTE = 272,
-    ASSIGNMENT = 273,
-    PROGRAM = 274
+    NEQ = 258,
+    END = 259,
+    VAR = 260,
+    IDENTIFIER = 261,
+    IF = 262,
+    READ = 263,
+    ELSE = 264,
+    THEN = 265,
+    GT = 266,
+    EQ = 267,
+    WHILE = 268,
+    OUTPUT = 269,
+    GTE = 270,
+    DO = 271,
+    BEGINX = 272,
+    BOOLEAN = 273,
+    INTEGER_NUM = 274,
+    INTEGER = 275,
+    LTE = 276,
+    LT = 277,
+    ASSIGNMENT = 278,
+    PROGRAM = 279
   };
 #endif
 /* Tokens.  */
-#define END 258
-#define VAR 259
-#define IDENTIFIER 260
-#define IF 261
-#define READ 262
-#define ELSE 263
-#define THEN 264
-#define WHILE 265
-#define OUTPUT 266
-#define DO 267
-#define BEGINX 268
-#define BOOLEAN 269
-#define INTEGER_NUM 270
-#define INTEGER 271
-#define LTE 272
-#define ASSIGNMENT 273
-#define PROGRAM 274
+#define NEQ 258
+#define END 259
+#define VAR 260
+#define IDENTIFIER 261
+#define IF 262
+#define READ 263
+#define ELSE 264
+#define THEN 265
+#define GT 266
+#define EQ 267
+#define WHILE 268
+#define OUTPUT 269
+#define GTE 270
+#define DO 271
+#define BEGINX 272
+#define BOOLEAN 273
+#define INTEGER_NUM 274
+#define INTEGER 275
+#define LTE 276
+#define LT 277
+#define ASSIGNMENT 278
+#define PROGRAM 279
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -93,7 +103,7 @@ union YYSTYPE
    TOKEN_INFO info;
    DLIST dlist;
 
-#line 97 "y.tab.h" /* yacc.c:1909  */
+#line 107 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

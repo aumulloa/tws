@@ -33,8 +33,16 @@
 #define ReadNode       17
 #define IntegerNode    18
 #define IdentifierNode 19
+#define GENode         20
+#define LTNode         21
+#define GTNode         22
+#define EQNode         23
+#define NEQNode        24
 
-#define NumberOfNodes  19
+
+
+#define NumberOfNodes  24
+
 
 typedef TreeNode UserType;
 
@@ -47,7 +55,7 @@ char *node[] = { "program", "types", "type", "dclns",
                  "dcln", "integer", "boolean", "block",
                  "assign", "output", "if", "while", 
                  "<null>", "<=", "+", "-", "read",
-                 "<integer>", "<identifier>" 
+                 "<integer>", "<identifier>", ">=", "<", ">", "=", "<>"
                 };
 
 
@@ -161,6 +169,30 @@ UserType Expression (TreeNode T)
      
    switch (NodeName(T))
    {
+      case EQNode :    
+         Type1 = Expression (Child(T,1));
+         Type2 = Expression (Child(T,2));
+
+         if (Type1 != Type2)
+         {
+            ErrorHeader(Child(T,1));
+            printf ("ARGUMENTS OF '=' MUST BE TYPE INTEGER\n");
+            printf ("\n");
+         }
+         return (TypeBoolean);
+
+      case NEQNode :    
+         Type1 = Expression (Child(T,1));
+         Type2 = Expression (Child(T,2));
+
+         if (Type1 != Type2)
+         {
+            ErrorHeader(Child(T,1));
+            printf ("ARGUMENTS OF '<>' MUST BE TYPE INTEGER\n");
+            printf ("\n");
+         }
+         return (TypeBoolean);
+
       case LENode :    
          Type1 = Expression (Child(T,1));
          Type2 = Expression (Child(T,2));
@@ -173,6 +205,42 @@ UserType Expression (TreeNode T)
          }
          return (TypeBoolean);
 
+      case GENode :    
+         Type1 = Expression (Child(T,1));
+         Type2 = Expression (Child(T,2));
+
+         if (Type1 != Type2)
+         {
+            ErrorHeader(Child(T,1));
+            printf ("ARGUMENTS OF '>=' MUST BE TYPE INTEGER\n");
+            printf ("\n");
+         }
+         return (TypeBoolean);
+
+      case LTNode :    
+         Type1 = Expression (Child(T,1));
+         Type2 = Expression (Child(T,2));
+
+         if (Type1 != Type2)
+         {
+            ErrorHeader(Child(T,1));
+            printf ("ARGUMENTS OF '<' MUST BE TYPE INTEGER\n");
+            printf ("\n");
+         }
+         return (TypeBoolean);   
+
+      case GTNode :    
+         Type1 = Expression (Child(T,1));
+         Type2 = Expression (Child(T,2));
+
+         if (Type1 != Type2)
+         {
+            ErrorHeader(Child(T,1));
+            printf ("ARGUMENTS OF '>' MUST BE TYPE INTEGER\n");
+            printf ("\n");
+         }
+         return (TypeBoolean);   
+   
 
       case PlusNode :
       case MinusNode : 

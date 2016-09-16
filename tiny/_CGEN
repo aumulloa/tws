@@ -7,74 +7,58 @@ Incrementing Framesize to 1
 Incrementing Framesize to 2
        LIT    0             
 Incrementing Framesize to 3
-       LIT    0             
-Incrementing Framesize to 4
-       LIT    0             
-Incrementing Framesize to 5
 <<< CODE GENERATOR >>> Processing Node block , Label is  
 <<< CODE GENERATOR >>> Processing Node assign , Label is  
 <<< CODE GENERATOR >>> Processing Node <integer> , Label is  
-       LIT    1             
-Incrementing Framesize to 6
-Decrementing Framesize to 5
+       LIT    3             
+Incrementing Framesize to 4
+Decrementing Framesize to 3
        SGV    0             
 <<< CODE GENERATOR >>> Processing Node assign , Label is  
 <<< CODE GENERATOR >>> Processing Node <integer> , Label is  
-       LIT    2             
-Incrementing Framesize to 6
-Decrementing Framesize to 5
+       LIT    1             
+Incrementing Framesize to 4
+Decrementing Framesize to 3
        SGV    1             
 <<< CODE GENERATOR >>> Processing Node assign , Label is  
 <<< CODE GENERATOR >>> Processing Node <integer> , Label is  
-       LIT    3             
-Incrementing Framesize to 6
-Decrementing Framesize to 5
+       LIT    7             
+Incrementing Framesize to 4
+Decrementing Framesize to 3
        SGV    2             
-<<< CODE GENERATOR >>> Processing Node assign , Label is  
-<<< CODE GENERATOR >>> Processing Node <integer> , Label is  
-       LIT    4             
-Incrementing Framesize to 6
-Decrementing Framesize to 5
-       SGV    3             
-<<< CODE GENERATOR >>> Processing Node assign , Label is  
-<<< CODE GENERATOR >>> Processing Node <integer> , Label is  
-       LIT    5             
-Incrementing Framesize to 6
-Decrementing Framesize to 5
-       SGV    4             
-<<< CODE GENERATOR >>> Processing Node output , Label is  
+<<< CODE GENERATOR >>> Processing Node if , Label is  
+<<< CODE GENERATOR >>> Processing Node = , Label is  
+<<< CODE GENERATOR >>> Processing Node - , Label is  
 <<< CODE GENERATOR >>> Processing Node <identifier> , Label is  
-Incrementing Framesize to 6
+Incrementing Framesize to 4
        LGV    0             
-       SOS    OUTPUT        
-Decrementing Framesize to 5
 <<< CODE GENERATOR >>> Processing Node <identifier> , Label is  
-Incrementing Framesize to 6
-       LGV    1             
-       SOS    OUTPUT        
-Decrementing Framesize to 5
-<<< CODE GENERATOR >>> Processing Node <identifier> , Label is  
-Incrementing Framesize to 6
+Incrementing Framesize to 5
        LGV    2             
+       BOP    BMINUS        
+Decrementing Framesize to 4
+<<< CODE GENERATOR >>> Processing Node <integer> , Label is  
+       LIT    2             
+Incrementing Framesize to 5
+       BOP    BEQ           
+Decrementing Framesize to 4
+       COND   L1     L2     
+Decrementing Framesize to 3
+<<< CODE GENERATOR >>> Processing Node output , Label is  L1
+<<< CODE GENERATOR >>> Processing Node <integer> , Label is  L1
+L1     LIT    5             
+Incrementing Framesize to 4
        SOS    OUTPUT        
-Decrementing Framesize to 5
-<<< CODE GENERATOR >>> Processing Node <identifier> , Label is  
-Incrementing Framesize to 6
-       LGV    3             
-       SOS    OUTPUT        
-Decrementing Framesize to 5
-<<< CODE GENERATOR >>> Processing Node <identifier> , Label is  
-Incrementing Framesize to 6
-       LGV    4             
-       SOS    OUTPUT        
-Decrementing Framesize to 5
+Decrementing Framesize to 3
        SOS    OUTPUTL       
-<<< CODE GENERATOR >>> Processing Node output , Label is  
-<<< CODE GENERATOR >>> Processing Node <identifier> , Label is  
-Incrementing Framesize to 6
-       LGV    0             
+       GOTO   L3            
+<<< CODE GENERATOR >>> Processing Node output , Label is  L2
+<<< CODE GENERATOR >>> Processing Node <integer> , Label is  L2
+L2     LIT    2             
+Incrementing Framesize to 4
        SOS    OUTPUT        
-Decrementing Framesize to 5
+Decrementing Framesize to 3
        SOS    OUTPUTL       
-<<< CODE GENERATOR >>> Processing Node <null> , Label is  
-       HALT                 
+       NOP                  
+<<< CODE GENERATOR >>> Processing Node <null> , Label is  L3
+L3     HALT                 

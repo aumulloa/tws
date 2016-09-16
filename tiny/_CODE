@@ -1,30 +1,24 @@
        LIT    0             
        LIT    0             
        LIT    0             
-       LIT    0             
-       LIT    0             
-       LIT    1             
-       SGV    0             
-       LIT    2             
-       SGV    1             
        LIT    3             
+       SGV    0             
+       LIT    1             
+       SGV    1             
+       LIT    7             
        SGV    2             
-       LIT    4             
-       SGV    3             
-       LIT    5             
-       SGV    4             
        LGV    0             
-       SOS    OUTPUT        
-       LGV    1             
-       SOS    OUTPUT        
        LGV    2             
-       SOS    OUTPUT        
-       LGV    3             
-       SOS    OUTPUT        
-       LGV    4             
-       SOS    OUTPUT        
-       SOS    OUTPUTL       
-       LGV    0             
+       BOP    BMINUS        
+       LIT    2             
+       BOP    BEQ           
+       COND   L1     L2     
+L1     LIT    5             
        SOS    OUTPUT        
        SOS    OUTPUTL       
-       HALT                 
+       GOTO   L3            
+L2     LIT    2             
+       SOS    OUTPUT        
+       SOS    OUTPUTL       
+       NOP                  
+L3     HALT                 

@@ -1,5 +1,5 @@
-State 56 conflicts: 1 shift/reduce
-State 61 conflicts: 3 reduce/reduce
+State 62 conflicts: 1 shift/reduce
+State 73 conflicts: 3 reduce/reduce
 
 
 Grammar
@@ -43,84 +43,95 @@ Grammar
 
    25 Expression: Term
    26           | Term LTE Term
+   27           | Term GTE Term
+   28           | Term LT Term
+   29           | Term GT Term
+   30           | Term EQ Term
+   31           | Term NEQ Term
 
-   27 Term: Primary
-   28     | Primary '+' Term
+   32 Term: Primary
+   33     | Primary '+' Term
+   34     | Primary '-' Term
 
-   29 Primary: '-' Primary
-   30        | READ
-   31        | Name
-   32        | INTEGER_NUM
-   33        | '(' Expression ')'
+   35 Primary: '-' Primary
+   36        | READ
+   37        | Name
+   38        | INTEGER_NUM
+   39        | '(' Expression ')'
 
-   34 Name: IDENTIFIER
+   40 Name: IDENTIFIER
 
 
 Terminals, with rules where they appear
 
 $end (0) 0
-'(' (40) 15 16 33
-')' (41) 15 23 33
-'+' (43) 28
+'(' (40) 15 16 39
+')' (41) 15 23 39
+'+' (43) 33
 ',' (44) 8 24
-'-' (45) 29
+'-' (45) 34 35
 '.' (46) 1
 ':' (58) 1 7
 ';' (59) 5 13
 error (256)
-END (258) 12
-VAR (259) 2
-IDENTIFIER (260) 34
-IF (261) 17
-READ (262) 30
-ELSE (263) 22
-THEN (264) 17
-WHILE (265) 18
-OUTPUT (266) 15 16
-DO (267) 18
-BEGINX (268) 11
-BOOLEAN (269) 10
-INTEGER_NUM (270) 32
-INTEGER (271) 9
-LTE (272) 26
-ASSIGNMENT (273) 14
-PROGRAM (274) 1
+NEQ (258) 31
+END (259) 12
+VAR (260) 2
+IDENTIFIER (261) 40
+IF (262) 17
+READ (263) 36
+ELSE (264) 22
+THEN (265) 17
+GT (266) 29
+EQ (267) 30
+WHILE (268) 18
+OUTPUT (269) 15 16
+GTE (270) 27
+DO (271) 18
+BEGINX (272) 11
+BOOLEAN (273) 10
+INTEGER_NUM (274) 38
+INTEGER (275) 9
+LTE (276) 26
+LT (277) 28
+ASSIGNMENT (278) 14
+PROGRAM (279) 1
 
 
 Nonterminals, with rules where they appear
 
-$accept (28)
+$accept (33)
     on left: 0
-Tiny (29)
+Tiny (34)
     on left: 1, on right: 0
-Dclns (30)
+Dclns (35)
     on left: 2 3, on right: 1
-Dclns_1 (31)
+Dclns_1 (36)
     on left: 4 5, on right: 2 5
-Dcln (32)
+Dcln (37)
     on left: 6, on right: 5
-Dcln_1 (33)
+Dcln_1 (38)
     on left: 7 8, on right: 6 8
-Type (34)
+Type (39)
     on left: 9 10, on right: 7
-Body (35)
+Body (40)
     on left: 11, on right: 1 19
-Body_1 (36)
+Body_1 (41)
     on left: 12 13, on right: 11 13
-Statement (37)
+Statement (42)
     on left: 14 15 16 17 18 19 20, on right: 12 13 17 18 22
-Statement_1_1 (38)
+Statement_1_1 (43)
     on left: 21 22, on right: 17
-Statement_1 (39)
+Statement_1 (44)
     on left: 23 24, on right: 16 24
-Expression (40)
-    on left: 25 26, on right: 14 15 17 18 23 24 33
-Term (41)
-    on left: 27 28, on right: 25 26 28
-Primary (42)
-    on left: 29 30 31 32 33, on right: 27 28 29
-Name (43)
-    on left: 34, on right: 1 7 8 14 31
+Expression (45)
+    on left: 25 26 27 28 29 30 31, on right: 14 15 17 18 23 24 39
+Term (46)
+    on left: 32 33 34, on right: 25 26 27 28 29 30 31 33 34
+Primary (47)
+    on left: 35 36 37 38 39, on right: 32 33 34 35
+Name (48)
+    on left: 40, on right: 1 7 8 14 37
 
 
 State 0
@@ -150,9 +161,9 @@ State 2
 
 State 3
 
-   34 Name: IDENTIFIER .
+   40 Name: IDENTIFIER .
 
-    $default  reduce using rule 34 (Name)
+    $default  reduce using rule 40 (Name)
 
 
 State 4
@@ -408,21 +419,21 @@ State 30
 
 State 31
 
-   30 Primary: READ .
+   36 Primary: READ .
 
-    $default  reduce using rule 30 (Primary)
+    $default  reduce using rule 36 (Primary)
 
 
 State 32
 
-   32 Primary: INTEGER_NUM .
+   38 Primary: INTEGER_NUM .
 
-    $default  reduce using rule 32 (Primary)
+    $default  reduce using rule 38 (Primary)
 
 
 State 33
 
-   33 Primary: '(' . Expression ')'
+   39 Primary: '(' . Expression ')'
 
     IDENTIFIER   shift, and go to state 3
     READ         shift, and go to state 31
@@ -438,7 +449,7 @@ State 33
 
 State 34
 
-   29 Primary: '-' . Primary
+   35 Primary: '-' . Primary
 
     IDENTIFIER   shift, and go to state 3
     READ         shift, and go to state 31
@@ -461,34 +472,46 @@ State 36
 
    25 Expression: Term .
    26           | Term . LTE Term
+   27           | Term . GTE Term
+   28           | Term . LT Term
+   29           | Term . GT Term
+   30           | Term . EQ Term
+   31           | Term . NEQ Term
 
-    LTE  shift, and go to state 48
+    NEQ  shift, and go to state 48
+    GT   shift, and go to state 49
+    EQ   shift, and go to state 50
+    GTE  shift, and go to state 51
+    LTE  shift, and go to state 52
+    LT   shift, and go to state 53
 
     $default  reduce using rule 25 (Expression)
 
 
 State 37
 
-   27 Term: Primary .
-   28     | Primary . '+' Term
+   32 Term: Primary .
+   33     | Primary . '+' Term
+   34     | Primary . '-' Term
 
-    '+'  shift, and go to state 49
+    '+'  shift, and go to state 54
+    '-'  shift, and go to state 55
 
-    $default  reduce using rule 27 (Term)
+    $default  reduce using rule 32 (Term)
 
 
 State 38
 
-   31 Primary: Name .
+   37 Primary: Name .
 
-    $default  reduce using rule 31 (Primary)
+    $default  reduce using rule 37 (Primary)
 
 
 State 39
 
    18 Statement: WHILE Expression . DO Statement
 
-    DO  shift, and go to state 50
+    DO  shift, and go to state 56
 
 
 State 40
@@ -502,8 +525,8 @@ State 40
     '('          shift, and go to state 33
     '-'          shift, and go to state 34
 
-    Statement_1  go to state 51
-    Expression   go to state 52
+    Statement_1  go to state 57
+    Expression   go to state 58
     Term         go to state 36
     Primary      go to state 37
     Name         go to state 38
@@ -529,7 +552,7 @@ State 42
     $default  reduce using rule 20 (Statement)
 
     Body       go to state 21
-    Body_1     go to state 53
+    Body_1     go to state 59
     Statement  go to state 23
     Name       go to state 24
 
@@ -544,7 +567,7 @@ State 43
     '('          shift, and go to state 33
     '-'          shift, and go to state 34
 
-    Expression  go to state 54
+    Expression  go to state 60
     Term        go to state 36
     Primary     go to state 37
     Name        go to state 38
@@ -559,16 +582,16 @@ State 44
 
 State 45
 
-   33 Primary: '(' Expression . ')'
+   39 Primary: '(' Expression . ')'
 
-    ')'  shift, and go to state 55
+    ')'  shift, and go to state 61
 
 
 State 46
 
-   29 Primary: '-' Primary .
+   35 Primary: '-' Primary .
 
-    $default  reduce using rule 29 (Primary)
+    $default  reduce using rule 35 (Primary)
 
 
 State 47
@@ -584,11 +607,71 @@ State 47
     $default  reduce using rule 20 (Statement)
 
     Body       go to state 21
-    Statement  go to state 56
+    Statement  go to state 62
     Name       go to state 24
 
 
 State 48
+
+   31 Expression: Term NEQ . Term
+
+    IDENTIFIER   shift, and go to state 3
+    READ         shift, and go to state 31
+    INTEGER_NUM  shift, and go to state 32
+    '('          shift, and go to state 33
+    '-'          shift, and go to state 34
+
+    Term     go to state 63
+    Primary  go to state 37
+    Name     go to state 38
+
+
+State 49
+
+   29 Expression: Term GT . Term
+
+    IDENTIFIER   shift, and go to state 3
+    READ         shift, and go to state 31
+    INTEGER_NUM  shift, and go to state 32
+    '('          shift, and go to state 33
+    '-'          shift, and go to state 34
+
+    Term     go to state 64
+    Primary  go to state 37
+    Name     go to state 38
+
+
+State 50
+
+   30 Expression: Term EQ . Term
+
+    IDENTIFIER   shift, and go to state 3
+    READ         shift, and go to state 31
+    INTEGER_NUM  shift, and go to state 32
+    '('          shift, and go to state 33
+    '-'          shift, and go to state 34
+
+    Term     go to state 65
+    Primary  go to state 37
+    Name     go to state 38
+
+
+State 51
+
+   27 Expression: Term GTE . Term
+
+    IDENTIFIER   shift, and go to state 3
+    READ         shift, and go to state 31
+    INTEGER_NUM  shift, and go to state 32
+    '('          shift, and go to state 33
+    '-'          shift, and go to state 34
+
+    Term     go to state 66
+    Primary  go to state 37
+    Name     go to state 38
+
+
+State 52
 
    26 Expression: Term LTE . Term
 
@@ -598,14 +681,14 @@ State 48
     '('          shift, and go to state 33
     '-'          shift, and go to state 34
 
-    Term     go to state 57
+    Term     go to state 67
     Primary  go to state 37
     Name     go to state 38
 
 
-State 49
+State 53
 
-   28 Term: Primary '+' . Term
+   28 Expression: Term LT . Term
 
     IDENTIFIER   shift, and go to state 3
     READ         shift, and go to state 31
@@ -613,12 +696,42 @@ State 49
     '('          shift, and go to state 33
     '-'          shift, and go to state 34
 
-    Term     go to state 58
+    Term     go to state 68
     Primary  go to state 37
     Name     go to state 38
 
 
-State 50
+State 54
+
+   33 Term: Primary '+' . Term
+
+    IDENTIFIER   shift, and go to state 3
+    READ         shift, and go to state 31
+    INTEGER_NUM  shift, and go to state 32
+    '('          shift, and go to state 33
+    '-'          shift, and go to state 34
+
+    Term     go to state 69
+    Primary  go to state 37
+    Name     go to state 38
+
+
+State 55
+
+   34 Term: Primary '-' . Term
+
+    IDENTIFIER   shift, and go to state 3
+    READ         shift, and go to state 31
+    INTEGER_NUM  shift, and go to state 32
+    '('          shift, and go to state 33
+    '-'          shift, and go to state 34
+
+    Term     go to state 70
+    Primary  go to state 37
+    Name     go to state 38
+
+
+State 56
 
    18 Statement: WHILE Expression DO . Statement
 
@@ -631,82 +744,124 @@ State 50
     $default  reduce using rule 20 (Statement)
 
     Body       go to state 21
-    Statement  go to state 59
+    Statement  go to state 71
     Name       go to state 24
 
 
-State 51
+State 57
 
    16 Statement: OUTPUT '(' Statement_1 .
 
     $default  reduce using rule 16 (Statement)
 
 
-State 52
+State 58
 
    15 Statement: OUTPUT '(' Expression . ')'
    23 Statement_1: Expression . ')'
    24            | Expression . ',' Statement_1
 
-    ','  shift, and go to state 60
-    ')'  shift, and go to state 61
+    ','  shift, and go to state 72
+    ')'  shift, and go to state 73
 
 
-State 53
+State 59
 
    13 Body_1: Statement ';' Body_1 .
 
     $default  reduce using rule 13 (Body_1)
 
 
-State 54
+State 60
 
    14 Statement: Name ASSIGNMENT Expression .
 
     $default  reduce using rule 14 (Statement)
 
 
-State 55
+State 61
 
-   33 Primary: '(' Expression ')' .
+   39 Primary: '(' Expression ')' .
 
-    $default  reduce using rule 33 (Primary)
+    $default  reduce using rule 39 (Primary)
 
 
-State 56
+State 62
 
    17 Statement: IF Expression THEN Statement . Statement_1_1
 
-    ELSE  shift, and go to state 62
+    ELSE  shift, and go to state 74
 
     ELSE      [reduce using rule 21 (Statement_1_1)]
     $default  reduce using rule 21 (Statement_1_1)
 
-    Statement_1_1  go to state 63
+    Statement_1_1  go to state 75
 
 
-State 57
+State 63
+
+   31 Expression: Term NEQ Term .
+
+    $default  reduce using rule 31 (Expression)
+
+
+State 64
+
+   29 Expression: Term GT Term .
+
+    $default  reduce using rule 29 (Expression)
+
+
+State 65
+
+   30 Expression: Term EQ Term .
+
+    $default  reduce using rule 30 (Expression)
+
+
+State 66
+
+   27 Expression: Term GTE Term .
+
+    $default  reduce using rule 27 (Expression)
+
+
+State 67
 
    26 Expression: Term LTE Term .
 
     $default  reduce using rule 26 (Expression)
 
 
-State 58
+State 68
 
-   28 Term: Primary '+' Term .
+   28 Expression: Term LT Term .
 
-    $default  reduce using rule 28 (Term)
+    $default  reduce using rule 28 (Expression)
 
 
-State 59
+State 69
+
+   33 Term: Primary '+' Term .
+
+    $default  reduce using rule 33 (Term)
+
+
+State 70
+
+   34 Term: Primary '-' Term .
+
+    $default  reduce using rule 34 (Term)
+
+
+State 71
 
    18 Statement: WHILE Expression DO Statement .
 
     $default  reduce using rule 18 (Statement)
 
 
-State 60
+State 72
 
    24 Statement_1: Expression ',' . Statement_1
 
@@ -716,14 +871,14 @@ State 60
     '('          shift, and go to state 33
     '-'          shift, and go to state 34
 
-    Statement_1  go to state 64
-    Expression   go to state 65
+    Statement_1  go to state 76
+    Expression   go to state 77
     Term         go to state 36
     Primary      go to state 37
     Name         go to state 38
 
 
-State 61
+State 73
 
    15 Statement: OUTPUT '(' Expression ')' .
    23 Statement_1: Expression ')' .
@@ -737,7 +892,7 @@ State 61
     $default  reduce using rule 15 (Statement)
 
 
-State 62
+State 74
 
    22 Statement_1_1: ELSE . Statement
 
@@ -750,41 +905,41 @@ State 62
     $default  reduce using rule 20 (Statement)
 
     Body       go to state 21
-    Statement  go to state 66
+    Statement  go to state 78
     Name       go to state 24
 
 
-State 63
+State 75
 
    17 Statement: IF Expression THEN Statement Statement_1_1 .
 
     $default  reduce using rule 17 (Statement)
 
 
-State 64
+State 76
 
    24 Statement_1: Expression ',' Statement_1 .
 
     $default  reduce using rule 24 (Statement_1)
 
 
-State 65
+State 77
 
    23 Statement_1: Expression . ')'
    24            | Expression . ',' Statement_1
 
-    ','  shift, and go to state 60
-    ')'  shift, and go to state 67
+    ','  shift, and go to state 72
+    ')'  shift, and go to state 79
 
 
-State 66
+State 78
 
    22 Statement_1_1: ELSE Statement .
 
     $default  reduce using rule 22 (Statement_1_1)
 
 
-State 67
+State 79
 
    23 Statement_1: Expression ')' .
 

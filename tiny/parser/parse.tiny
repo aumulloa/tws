@@ -1,30 +1,36 @@
 %%
-Tiny       -> PROGRAM Name ':' Dclns Body Name '.' 	=> "program";
-Dclns      -> VAR (Dcln ';')*				=> "dclns"
-           -> 					     	=> "dclns";
-Dcln       -> Name list ',' ':' Type			=> "dcln";
-Type       -> INTEGER 		             		=> "integer"
-           -> BOOLEAN				     	=> "boolean";
-Body       -> BEGINX Statement list ';' END      	=> "block";
-Statement  -> Name ASSIGNMENT Expression          	=> "assign"
-           -> OUTPUT '(' Expression ')'           	=> "output"
-           -> OUTPUT '(' Expression list ',' ')'    => "output"
+Tiny       -> PROGRAM Name ':' Dclns Body Name '.' 	      => "program";
+Dclns      -> VAR (Dcln ';')*				                      => "dclns"
+           -> 					                                  => "dclns";
+Dcln       -> Name list ',' ':' Type			                => "dcln";
+Type       -> INTEGER 		             		                => "integer"
+           -> BOOLEAN				     	                        => "boolean";
+Body       -> BEGINX Statement list ';' END             	=> "block";
+Statement  -> Name ASSIGNMENT Expression                	=> "assign"
+           -> OUTPUT '(' Expression ')'                  	=> "output"
+           -> OUTPUT '(' Expression list ',' ')'          => "output"
            -> IF Expression THEN Statement
-                            (ELSE Statement)?       	=> "if"
-           -> WHILE Expression DO Statement      	=> "while"
+                            (ELSE Statement)?            	=> "if"
+           -> WHILE Expression DO Statement      	        => "while"
            -> Body
-	   ->                                        	=> "<null>";
+	         ->                                           	=> "<null>";
 
 Expression -> Term	                         		
-	   -> Term LTE Term				=> "<=";
+	         -> Term LTE Term	                         			=> "<="
+           -> Term GTE Term                               => ">="
+           -> Term LT Term                                => "<"
+           -> Term GT Term                                => ">"
+           -> Term EQ Term                                => "="
+           -> Term NEQ Term                               => "<>";
 
 Term       -> Primary 
-	   -> Primary '+' Term				=> "+";
+	         -> Primary '+' Term				                    => "+"
+           -> Primary '-' Term                            => "-";
 
-Primary    -> '-' Primary                            	=> "-"
-	   -> READ                                 	=> "read"
+Primary    -> '-' Primary                            	    => "-"
+	         -> READ                                 	      => "read"
            -> Name
-           -> INTEGER_NUM				=> "<integer>"
+           -> INTEGER_NUM				                          => "<integer>"
            -> '(' Expression ')';
 
-Name       -> IDENTIFIER				=> "<identifier>";
+Name       -> IDENTIFIER				                          => "<identifier>";
